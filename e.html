@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>今日美食抽奖</title>
+    <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'ZCOOL XiaoWei', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #ff9d6c 0%, #ff6b6b 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            color: #333;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
+            width: 90%;
+            max-width: 800px;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        h1 {
+            color: #e74c3c;
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .subtitle {
+            color: #666;
+            font-size: 1.3rem;
+            margin-bottom: 40px;
+        }
+        
+        .options {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .option {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            cursor: default;
+            transition: all 0.3s ease;
+        }
+        
+        .option:hover {
+            background: #f1f2f6;
+            transform: translateY(-3px);
+        }
+        
+        .result-area {
+            background: linear-gradient(145deg, #e0eafc, #cfdef3);
+            border-radius: 15px;
+            padding: 40px;
+            margin: 40px 0;
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.1);
+            height: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        
+        .result-text {
+            font-size: 1.5rem;
+            color: #555;
+            margin-bottom: 20px;
+        }
+        
+        .result {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #e74c3c;
+            height: 60px;
+            overflow: hidden;
+        }
+        
+        .luckyman {
+            font-size: 2.6rem;
+            font-weight: bold;
+            color: #e74c3c;
+            height: 60px;
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        button {
+            background: linear-gradient(to right, #ff9d6c, #ff6b6b);
+            color: white;
+            border: none;
+            padding: 18px 50px;
+            font-size: 1.4rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'ZCOOL XiaoWei', serif;
+            box-shadow: 0 5px 20px rgba(255, 107, 107, 0.5);
+            margin-top: 20px;
+            display: inline-block;
+        }
+        
+        button:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.75);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        .stats {
+            margin-top: 40px;
+            background: #f9f9f9;
+            border-radius: 15px;
+            padding: 20px;
+            border: 1px solid #eee;
+        }
+        
+        .stats-title {
+            font-size: 1.4rem;
+            color: #e74c3c;
+            margin-bottom: 15px;
+            font-family: 'Ma Shan Zheng', cursive;
+        }
+        
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 15px;
+            border-bottom: 1px dashed #ddd;
+        }
+        
+        .stat-item:last-child {
+            border-bottom: none;
+        }
+        
+        .progress-bar {
+            height: 20px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            margin: 5px 0 10px 0;
+            overflow: hidden;
+        }
+        
+        .progress-value {
+            height: 100%;
+            background: linear-gradient(to right, #ff9d6c, #ff6b6b);
+            border-radius: 10px;
+        }
+        
+        .timer {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #ffdd59;
+            padding: 8px 15px;
+            border-radius: 50px;
+            font-weight: bold;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            font-size: 1.1rem;
+        }
+        
+        .instructions {
+            margin-top: 25px;
+            padding: 15px;
+            background: #e8f4f8;
+            border-radius: 12px;
+            font-size: 1.05rem;
+            border-left: 5px solid #3498db;
+        }
+        
+        .footer {
+            margin-top: 40px;
+            color: #777;
+            font-size: 0.9rem;
+        }
+        
+        /* 动画效果 */
+        @keyframes rotateOption {
+            0% { transform: translateY(100px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 25px;
+            }
+            
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .option {
+                padding: 10px 15px;
+                font-size: 1rem;
+            }
+            
+            .result {
+                font-size: 2.2rem;
+            }
+            
+            .result-area {
+                padding: 20px;
+                height: 180px;
+            }
+            
+            button {
+                padding: 15px 40px;
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>今天吃什么？</h1>
+        <div class="subtitle">选择困难症拯救者</div>
+        
+        <div class="options">
+            <div class="option">煲仔饭</div>
+            <div class="option">老乡鸡</div>
+            <div class="option">饺子</div>
+            <div class="option">烫菜</div>
+            <div class="option">食堂</div>
+            <div class="option">湘菜</div>
+            <div class="option">李宁</div>
+            <div class="option">炒粉</div>
+            <div class="option">外卖</div>
+        </div>
+        
+        <div class="result-area">
+            <div class="result-text">点击下方按钮开始抽奖</div>
+            <div class="result" id="result">?</div>
+        </div>
+        
+        <button id="draw-btn">开始选择今日美食</button>
+        
+        <div class="stats">
+            <div class="stats-title">投票统计</div>
+            <div class="stats-content" id="stats"></div>
+        </div>
+        
+        <div class="instructions">
+            <p><strong>使用说明：</strong> 点击"开始选择今日美食"按钮，系统会随机选择一个美食选项。每个选项被选中的机会均等，现在最受欢迎的是：<strong id="popular"></strong>！</p>
+        </div>
+        
+        <div class="footer">
+            今天你不再需要为吃什么而纠结 - 让命运决定美食！
+        </div>
+        
+        <div class="timer">抽奖状态: <span id="draw-state">准备中</span></div>
+    </div>
+
+    <audio id="drumroll" src="https://assets.mixkit.co/sfx/preview/mixkit-fast-drum-roll-565.mp3"></audio>
+    <audio id="success" src="https://assets.mixkit.co/sfx/preview/mixkit-winning-chimes-2015.mp3"></audio>
+
+    <script>
+        // 食物选项及初始投票数据
+        const foodOptions = ["烫菜", "食堂", "老乡鸡", "饺子", "煲仔饭", "湘菜", "李宁", "炒粉", "外卖", "PJ请客"];
+        let votes = {
+            "烫菜": 0,
+            "食堂": 0,
+            "老乡鸡": 0,
+            "煲仔饭": 0,
+            "饺子": 0,
+            "李宁": 0,
+            "炒粉": 0,
+            "湘菜": 0,
+            "外卖": 0,
+            "PJ请客": 0
+        };
+        
+        // DOM元素
+        const drawBtn = document.getElementById('draw-btn');
+        const resultEl = document.getElementById('result');
+        const statsEl = document.getElementById('stats');
+        const drawerState = document.getElementById('draw-state');
+        const popularEl = document.getElementById('popular');
+        
+        // 音效元素
+        const drumroll = document.getElementById('drumroll');
+        const success = document.getElementById('success');
+        
+        // 初始化投票统计
+        function initStats() {
+            statsEl.innerHTML = '';
+            
+            // 找出最大票数
+            const maxVotes = Math.max(...Object.values(votes));
+            
+            foodOptions.forEach(option => {
+                const percentage = votes[option] === 0 ? 0 : 
+                    Math.round((votes[option] / Object.values(votes).reduce((a, b) => a + b, 0)) * 100);
+                
+                const statItem = document.createElement('div');
+                statItem.className = 'stat-item';
+                
+                statItem.innerHTML = `
+                    <div>
+                        <strong>${option}</strong>：${votes[option]} 票 (${percentage}%)
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-value" style="width: ${percentage}%"></div>
+                    </div>
+                `;
+                
+                statsEl.appendChild(statItem);
+            });
+            
+            // 设置最受欢迎的食物
+            const maxOption = Object.keys(votes).reduce((a, b) => votes[a] > votes[b] ? a : b);
+            popularEl.textContent = maxOption;
+        }
+        
+        // 模拟抽奖动画效果
+        function drawAnimation(finalResult) {
+            resultEl.textContent = '';
+            resultEl.className = 'result';
+            drawerState.textContent = "抽奖中...";
+            drawBtn.disabled = true;
+            
+            // 播放鼓声
+            if(drumroll) {
+                drumroll.currentTime = 0;
+                drumroll.play();
+            }
+            
+            // 定义一个计数器用于控制动画次数
+            let count = 0;
+            const maxShuffles = 20;
+            
+            // 开始动画
+            const intervalId = setInterval(() => {
+                // 随机选择一个临时选项（除了最终结果）
+                const tempOptions = foodOptions.filter(opt => opt !== finalResult);
+                const tempResult = tempOptions[Math.floor(Math.random() * tempOptions.length)];
+                
+                resultEl.textContent = tempResult;
+                
+                // 增加计数器
+                count++;
+                
+                // 达到动画次数后停止
+                if(count >= maxShuffles) {
+                    clearInterval(intervalId);
+                    
+                    // 最终结果
+                    setTimeout(() => {
+                        resultEl.textContent = finalResult;
+                        resultEl.className = 'luckyman';  // 应用动画效果
+                        
+                        // 更新投票
+                        votes[finalResult]++;
+                        initStats();
+                        
+                        // 播放成功音效
+                        if(success) {
+                            success.play();
+                        }
+                        
+                        drawBtn.disabled = false;
+                        drawerState.textContent = "完成！";
+                    }, 200);
+                }
+            }, 100);
+        }
+        
+        // 点击抽奖按钮
+        drawBtn.addEventListener('click', () => {
+            // 随机选择一个结果
+            const result = foodOptions[Math.floor(Math.random() * foodOptions.length)];
+            
+            // 开始动画过程
+            drawAnimation(result);
+        });
+        
+        // 页面初始化
+        initStats();
+    </script>
+</body>
+</html>
