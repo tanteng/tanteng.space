@@ -126,7 +126,7 @@
 
         /* 主体容器 */
         .container {
-            max-width: 600px;
+            max-width: 760px;
             margin: 30px auto 0;
             padding: 0 20px 40px;
         }
@@ -327,6 +327,77 @@
 
         footer .beian a:hover {
             color: #666;
+        }
+
+        /* 平板及以下 */
+        @media (max-width: 768px) {
+            .hero {
+                padding: 36px 16px 28px;
+            }
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            .hero-avatar {
+                width: 64px;
+                height: 64px;
+            }
+            .container {
+                max-width: 720px;
+            }
+        }
+
+        /* 手机 */
+        @media (max-width: 640px) {
+            .container {
+                padding: 0 14px 24px;
+                margin-top: 20px;
+            }
+            .card {
+                padding: 18px;
+                border-radius: 10px;
+                margin-bottom: 16px;
+            }
+            .card h2 {
+                font-size: 16px;
+                margin-bottom: 12px;
+            }
+            .photo-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 6px;
+            }
+            .info-grid {
+                grid-template-columns: 80px 1fr;
+                gap: 8px 12px;
+            }
+            .info-label,
+            .info-value {
+                font-size: 13px;
+            }
+            .link-item {
+                padding: 10px 12px;
+            }
+            .link-item-icon {
+                width: 32px;
+                height: 32px;
+                margin-right: 12px;
+            }
+            .link-item-label {
+                font-size: 14px;
+            }
+        }
+
+        /* 超窄屏 */
+        @media (max-width: 380px) {
+            .hero h1 {
+                font-size: 1.5rem;
+            }
+            .photo-grid {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+            .info-grid {
+                grid-template-columns: 72px 1fr;
+            }
         }
     </style>
 </head>
