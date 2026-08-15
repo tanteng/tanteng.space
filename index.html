@@ -342,6 +342,17 @@
             letter-spacing: 0.12em;
         }
 
+        .footer-bio a {
+            color: #555;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-bio a:hover {
+            color: #000;
+            text-decoration: underline;
+        }
+
         .footer-links {
             margin: 12px 0;
         }
@@ -551,7 +562,12 @@
     </main>
 
     <footer>
-        <p class="footer-bio">深圳 · 摄影 · AI · Golang</p>
+        <p class="footer-bio">
+            <a href="https://photos.tanteng.space/">深圳</a> ·
+            <a href="https://blog.tanteng.space/categories/photo/">摄影</a> ·
+            <a href="https://blog.tanteng.space/categories/ai/">AI</a> ·
+            <a href="https://blog.tanteng.space/categories/tech/">Golang</a>
+        </p>
         <p class="footer-links">
             <a href="https://blog.tanteng.space">Blog</a> ·
             <a href="https://photos.tanteng.space">Photos</a> ·
