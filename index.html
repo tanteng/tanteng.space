@@ -6,8 +6,8 @@
 
     <!-- SEO Meta -->
     <title>Tony老师的个人空间 | 谈腾 | 深圳</title>
-    <meta name="description" content="hi，我是谈腾。一名后台开发工程师，现居深圳，技术博客分享AI、Golang、K8S等相关技术文章，相册频道记录日常生活及旅行照片。">
-    <meta name="keywords" content="谈腾,后台开发,腾讯,深圳,摄影,个人博客">
+    <meta name="description" content="谈腾。来自湖北，现居深圳。技术博客分享AI、Golang、K8S相关文章，相册频道记录日常与旅行。">
+    <meta name="keywords" content="谈腾,Tony,深圳,摄影,个人博客,AI,Golang">
     <meta name="author" content="谈腾">
     <meta name="robots" content="index, follow">
     <meta name="baidu-site-verification" content="codeva-Vwl6tppk52" />
@@ -44,59 +44,85 @@
             line-height: 1.6;
         }
 
-        /* 头部区域 */
+        /* 头部区域 - 照片轮播 hero */
         .hero {
-            background: linear-gradient(135deg, #2d3436 0%, #636e72 100%);
-            padding: 48px 20px 36px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             position: relative;
-        }
-
-        .hero-content {
-            text-align: center;
-            color: white;
-        }
-
-        .hero-avatar {
-            width: 72px;
-            height: 72px;
-            border-radius: 50%;
-            border: 2px solid rgba(255,255,255,0.4);
-            margin: 0 auto 16px;
+            height: 70vh;
+            min-height: 480px;
             overflow: hidden;
-            background: rgba(255,255,255,0.08);
+            background: #000;
+            padding: 0;
         }
 
-        .hero-avatar img {
+        .hero-slide {
+            position: absolute;
+            inset: 0;
             width: 100%;
             height: 100%;
             object-fit: cover;
-            display: block;
+            opacity: 0;
+            animation: hero-fade 24s infinite;
         }
 
-        .hero h1 {
+        .hero-slide:nth-child(1) { animation-delay: 0s; }
+        .hero-slide:nth-child(2) { animation-delay: 6s; }
+        .hero-slide:nth-child(3) { animation-delay: 12s; }
+        .hero-slide:nth-child(4) { animation-delay: 18s; }
+
+        @keyframes hero-fade {
+            0%   { opacity: 0; }
+            4%   { opacity: 1; }
+            21%  { opacity: 1; }
+            25%  { opacity: 0; }
+            100% { opacity: 0; }
+        }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                to bottom,
+                rgba(0,0,0,0.25) 0%,
+                rgba(0,0,0,0.10) 40%,
+                rgba(0,0,0,0.60) 100%
+            );
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: absolute;
+            z-index: 2;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 32px 20px 36px;
+            color: white;
+            text-align: center;
+            text-shadow: 0 2px 12px rgba(0,0,0,0.4);
+        }
+
+        .hero-content h1 {
             font-size: 2.2rem;
             font-weight: 700;
             letter-spacing: 0.15em;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
         }
 
         .hero-signature {
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             font-weight: 300;
             font-style: italic;
-            opacity: 0.7;
-            margin-top: 6px;
+            opacity: 0.85;
+            margin-top: 8px;
             letter-spacing: 0.05em;
         }
 
         .hero-subtitle {
-            font-size: 0.95rem;
-            opacity: 0.85;
-            font-weight: 300;
-            margin-top: 6px;
+            font-size: 0.78rem;
+            font-weight: 400;
+            opacity: 0.55;
+            margin-top: 14px;
+            letter-spacing: 0.08em;
+            font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
         }
 
         /* 主体容器 */
@@ -289,10 +315,34 @@
 
         /* 页脚 */
         footer {
-            margin-top: 30px;
+            margin-top: 40px;
+            padding: 28px 20px 32px;
             text-align: center;
             font-size: 13px;
-            color: #aaa;
+            color: #888;
+            border-top: 1px solid #e8e8e8;
+        }
+
+        .footer-bio {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 14px;
+            letter-spacing: 0.12em;
+        }
+
+        .footer-links {
+            margin: 12px 0;
+        }
+
+        .footer-links a {
+            color: #888;
+            text-decoration: none;
+            margin: 0 8px;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: #333;
         }
 
         footer .beian a {
@@ -307,14 +357,11 @@
         /* 平板及以下 */
         @media (max-width: 768px) {
             .hero {
-                padding: 36px 16px 28px;
+                height: 60vh;
+                min-height: 400px;
             }
-            .hero h1 {
+            .hero-content h1 {
                 font-size: 1.8rem;
-            }
-            .hero-avatar {
-                width: 64px;
-                height: 64px;
             }
             .container {
                 max-width: 600px;
@@ -363,55 +410,32 @@
 
         /* 超窄屏 */
         @media (max-width: 380px) {
-            .hero h1 {
+            .hero-content h1 {
                 font-size: 1.5rem;
             }
             .photo-grid {
                 grid-template-columns: 1fr;
                 gap: 8px;
             }
-            .info-grid {
-                grid-template-columns: 72px 1fr;
-            }
         }
     </style>
 </head>
 <body>
-    <!-- 头部区域 -->
+    <!-- 头部区域 - 照片轮播 hero -->
     <header class="hero">
+        <img class="hero-slide" src="https://assets.tanteng.space/photo-UtUqlwIF3R3uLMXD.jpeg?imageMogr2/auto-orient/thumbnail/1600x/format/webp/quality/85/interlace/1" alt="赤柱黄色小屋">
+        <img class="hero-slide" src="https://assets.tanteng.space/photo-OoK3B5mA5okUEtgX.jpeg?imageMogr2/auto-orient/thumbnail/1600x/format/webp/quality/85/interlace/1" alt="赤柱海滩">
+        <img class="hero-slide" src="https://assets.tanteng.space/photo-L2k2svtKUxL5ywdS.jpeg?imageMogr2/auto-orient/thumbnail/1600x/format/webp/quality/85/interlace/1" alt="赤柱码头">
+        <img class="hero-slide" src="https://assets.tanteng.space/photo-7yrxKmu8z6iddPRC.jpeg?imageMogr2/auto-orient/thumbnail/1600x/format/webp/quality/85/interlace/1" alt="浅水湾海滩">
+        <div class="hero-overlay"></div>
         <div class="hero-content">
-            <div class="hero-avatar">
-                <img src="/avatar.jpeg" alt="Tony的头像">
-            </div>
             <h1>Tony(谈腾)</h1>
             <p class="hero-signature">The journey is the reward.</p>
-            <p class="hero-subtitle">后台开发工程师 @ Tencent</p>
+            <p class="hero-subtitle">Software Developer @ Tencent</p>
         </div>
     </header>
 
     <main class="container">
-        <section class="card" id="about">
-                <h2>关于</h2>
-                <div class="info-grid">
-                    <span class="info-label">Name</span>
-                    <span class="info-value">谈腾</span>
-
-                    <span class="info-label">Location</span>
-                    <span class="info-value">深圳</span>
-
-                    <span class="info-label">Origin</span>
-                    <span class="info-value">湖北黄石</span>
-
-                    <span class="info-label">Interest</span>
-                    <span class="info-value">
-                        <a href="https://photos.tanteng.space/" target="_blank">摄影</a> /
-                        <a href="https://photos.tanteng.space/tag/%E6%97%85%E8%A1%8C" target="_blank">旅行</a> /
-                        <a href="https://photos.tanteng.space/tag/%E5%92%96%E5%95%A1" target="_blank">咖啡</a> /
-                        <a href="https://blog.tanteng.space/categories/tech/" target="_blank">技术</a>
-                    </span>
-                </div>
-            </section>
-
             <section class="card" id="posts">
                 <h2>最新文章</h2>
                 <div class="post-list">
@@ -515,6 +539,13 @@
     </main>
 
     <footer>
+        <p class="footer-bio">深圳 · 摄影 · AI · Golang</p>
+        <p class="footer-links">
+            <a href="https://blog.tanteng.space">Blog</a> ·
+            <a href="https://photos.tanteng.space">Photos</a> ·
+            <a href="https://www.instagram.com/tanteng1031/" target="_blank" rel="noopener noreferrer">Instagram</a> ·
+            <a href="mailto:tanteng@qq.com">Email</a>
+        </p>
         <p>&copy; 2026 Tony老师的个人空间</p>
         <p class="beian">
             <a href="https://beian.miit.gov.cn" target="_blank" rel="noopener noreferrer">粤ICP备2024315706号</a>
@@ -528,13 +559,13 @@
         "@type": "Person",
         "name": "谈腾",
         "alternateName": "Tony",
-        "description": "后台开发工程师，来自湖北，现居深圳，喜欢摄影、咖啡、旅行。",
+        "description": "来自湖北，现居深圳。",
         "url": "https://tanteng.space",
         "homeLocation": {
             "@type": "Place",
             "name": "深圳"
         },
-        "jobTitle": "后台开发工程师",
+        "jobTitle": "Software Developer",
         "worksFor": {
             "@type": "Organization",
             "name": "Tencent"
@@ -542,7 +573,6 @@
         "knowsAbout": [
             "Golang",
             "AI",
-            "后端开发",
             "摄影"
         ],
         "sameAs": [
