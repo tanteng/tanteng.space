@@ -25,6 +25,16 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Tony老师的个人空间">
 
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Tony老师的个人空间">
+    <meta name="twitter:description" content="谈腾。来自湖北，现居深圳。">
+    <meta name="twitter:image" content="https://tanteng.space/og-image.png">
+    <meta name="twitter:image:alt" content="Tony老师的个人空间">
+
+    <!-- 传统 image_src 兼容 -->
+    <link rel="image_src" href="https://tanteng.space/og-image.png">
+
     <!-- Favicon -->
     <link rel="icon" href="/favicon.ico">
     <link rel="icon" type="image/png" href="/favicon.png">
@@ -596,6 +606,12 @@
         "alternateName": "Tony",
         "description": "来自湖北，现居深圳。",
         "url": "https://tanteng.space",
+        "image": {
+            "@type": "ImageObject",
+            "url": "https://tanteng.space/og-image.png",
+            "width": 1200,
+            "height": 630
+        },
         "homeLocation": {
             "@type": "Place",
             "name": "深圳"
