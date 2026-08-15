@@ -132,6 +132,34 @@
             letter-spacing: 0.15em;
         }
 
+        /* 顶部导航 — 仿 blog.tanteng.space 右上方 */
+        .top-nav {
+            position: absolute;
+            top: 24px;
+            right: 32px;
+            z-index: 5;
+        }
+        .top-nav-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            gap: 28px;
+            align-items: center;
+        }
+        .top-nav-list a {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            transition: color 0.2s ease, opacity 0.2s ease;
+        }
+        .top-nav-list a:hover {
+            color: #fff;
+            opacity: 1;
+        }
+
         .hero-signature {
             font-size: 0.95rem;
             font-weight: 300;
@@ -437,6 +465,9 @@
             .info-value {
                 font-size: 13px;
             }
+            .top-nav { top: 14px; right: 14px; }
+            .top-nav-list { gap: 14px; }
+            .top-nav-list a { font-size: 13px; }
             .link-item {
                 padding: 10px 12px;
             }
@@ -465,6 +496,13 @@
 <body>
     <!-- 头部区域 - 照片轮播 hero -->
     <header class="hero">
+        <nav class="top-nav" role="navigation">
+            <ul class="top-nav-list">
+                <li><a href="https://blog.tanteng.space" target="_blank" rel="noopener">文章</a></li>
+                <li><a href="https://photos.tanteng.space" target="_blank" rel="noopener">相册</a></li>
+                <li><a href="mailto:tanteng@qq.com">关于</a></li>
+            </ul>
+        </nav>
         <img class="hero-slide" src="https://assets.tanteng.space/photo-1ofgyFsSJJYZJAvK.jpeg?imageMogr2/auto-orient/thumbnail/1600x/format/webp/quality/85/interlace/1" alt="海滩游客">
         <img class="hero-slide" src="https://assets.tanteng.space/photo-XBqNl2lDtd7m4THh.jpeg?imageMogr2/auto-orient/thumbnail/1600x/format/webp/quality/85/interlace/1" alt="沙滩躺椅">
         <img class="hero-slide" src="https://assets.tanteng.space/photo-OoK3B5mA5okUEtgX.jpeg?imageMogr2/auto-orient/thumbnail/1600x/format/webp/quality/85/interlace/1" alt="海湾与树剪影">
