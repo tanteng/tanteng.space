@@ -391,6 +391,11 @@
             .container {
                 max-width: 600px;
             }
+            /* H5 上：容器竖屏 → 图片水平超出 → object-position X 控水平裁切 */
+            .hero-slide:nth-child(1) { object-position: 100% 45%; }  /* 赤柱黄色小屋：主体靠右 */
+            .hero-slide:nth-child(2) { object-position: 0% 65%; }    /* 赤柱海滩：主体靠左 */
+            .hero-slide:nth-child(3) { object-position: 50% 50%; }   /* 赤柱码头：主体中央 */
+            .hero-slide:nth-child(4) { object-position: 100% 65%; }  /* 浅水湾海滩：主体靠右 */
         }
 
         /* 手机 */
