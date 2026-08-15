@@ -68,11 +68,12 @@
         .hero-slide:nth-child(1) {
             opacity: 1;
             animation: hero-fade-first 10s infinite;
+            object-position: center 45%;
         }
 
-        .hero-slide:nth-child(2) { animation: hero-fade 10s 2.5s infinite; }
-        .hero-slide:nth-child(3) { animation: hero-fade 10s 5s infinite; }
-        .hero-slide:nth-child(4) { animation: hero-fade 10s 7.5s infinite; }
+        .hero-slide:nth-child(2) { animation: hero-fade 10s 2.5s infinite; object-position: center 65%; }
+        .hero-slide:nth-child(3) { animation: hero-fade 10s 5s infinite; object-position: center 50%; }
+        .hero-slide:nth-child(4) { animation: hero-fade 10s 7.5s infinite; object-position: center 65%; }
 
         @keyframes hero-fade {
             0%      { opacity: 0; }
