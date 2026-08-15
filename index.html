@@ -77,13 +77,15 @@
         /* 首图：默认可见，不淡入，只在其他图轮过一轮后回到首图时淡入 */
         .hero-slide:nth-child(1) {
             opacity: 1;
-            animation: hero-fade-first 10s infinite;
-            object-position: center 45%;
+            animation: hero-fade-first 15s infinite;
+            object-position: center 55%;
         }
 
-        .hero-slide:nth-child(2) { animation: hero-fade 10s 2.5s infinite; object-position: center 65%; }
-        .hero-slide:nth-child(3) { animation: hero-fade 10s 5s infinite; object-position: center 50%; }
-        .hero-slide:nth-child(4) { animation: hero-fade 10s 7.5s infinite; object-position: center 65%; }
+        .hero-slide:nth-child(2) { animation: hero-fade 15s 2.5s infinite; object-position: center 75%; }
+        .hero-slide:nth-child(3) { animation: hero-fade 15s 5s infinite; object-position: center 50%; }
+        .hero-slide:nth-child(4) { animation: hero-fade 15s 7.5s infinite; object-position: center 75%; }
+        .hero-slide:nth-child(5) { animation: hero-fade 15s 10s infinite; object-position: center 40%; }
+        .hero-slide:nth-child(6) { animation: hero-fade 15s 12.5s infinite; object-position: center 40%; }
 
         @keyframes hero-fade {
             0%      { opacity: 0; }
@@ -96,9 +98,9 @@
         @keyframes hero-fade-first {
             0%      { opacity: 1; }
             20%     { opacity: 1; }
-            25%  { opacity: 0; }
-            97.5%   { opacity: 0; }
-            100% { opacity: 1; }
+            25%     { opacity: 0; }
+            96.67%  { opacity: 0; }
+            100%    { opacity: 1; }
         }
 
         .hero-overlay {
@@ -402,10 +404,12 @@
                 max-width: 600px;
             }
             /* H5 上：容器竖屏 → 图片水平超出 → object-position X 控水平裁切 */
-            .hero-slide:nth-child(1) { object-position: 100% 45%; }  /* 赤柱黄色小屋：主体靠右 */
-            .hero-slide:nth-child(2) { object-position: 0% 65%; }    /* 赤柱海滩：主体靠左 */
-            .hero-slide:nth-child(3) { object-position: 50% 50%; }   /* 赤柱码头：主体中央 */
-            .hero-slide:nth-child(4) { object-position: 100% 65%; }  /* 浅水湾海滩：主体靠右 */
+            .hero-slide:nth-child(1) { object-position: 50% 55%; }  /* 海滩游客：中央 */
+            .hero-slide:nth-child(2) { object-position: 35% 75%; }  /* 沙滩躺椅：偏左下 */
+            .hero-slide:nth-child(3) { object-position: 50% 50%; }  /* 海湾+树：中央 */
+            .hero-slide:nth-child(4) { object-position: 60% 75%; }  /* 湖边藤椅：偏右下 */
+            .hero-slide:nth-child(5) { object-position: 50% 40%; }  /* 维多利亚港湾：中央偏上 */
+            .hero-slide:nth-child(6) { object-position: 39% 40%; }  /* 通信基站：偏左上 */
         }
 
         /* 手机 */
@@ -463,10 +467,12 @@
 <body>
     <!-- 头部区域 - 照片轮播 hero -->
     <header class="hero">
-        <img class="hero-slide" src="https://assets.tanteng.space/photo-UtUqlwIF3R3uLMXD.jpeg?imageMogr2/auto-orient/thumbnail/1600x/format/webp/quality/85/interlace/1" alt="赤柱黄色小屋">
-        <img class="hero-slide" src="https://assets.tanteng.space/photo-OoK3B5mA5okUEtgX.jpeg?imageMogr2/auto-orient/thumbnail/1600x/format/webp/quality/85/interlace/1" alt="赤柱海滩">
-        <img class="hero-slide" src="https://assets.tanteng.space/photo-L2k2svtKUxL5ywdS.jpeg?imageMogr2/auto-orient/thumbnail/1600x/format/webp/quality/85/interlace/1" alt="赤柱码头">
-        <img class="hero-slide" src="https://assets.tanteng.space/photo-7yrxKmu8z6iddPRC.jpeg?imageMogr2/auto-orient/thumbnail/1600x/format/webp/quality/85/interlace/1" alt="浅水湾海滩">
+        <img class="hero-slide" src="https://assets.tanteng.space/photo-1ofgyFsSJJYZJAvK.jpeg?imageMogr2/auto-orient/thumbnail/1600x/format/webp/quality/85/interlace/1" alt="海滩游客">
+        <img class="hero-slide" src="https://assets.tanteng.space/photo-XBqNl2lDtd7m4THh.jpeg?imageMogr2/auto-orient/thumbnail/1600x/format/webp/quality/85/interlace/1" alt="沙滩躺椅">
+        <img class="hero-slide" src="https://assets.tanteng.space/photo-OoK3B5mA5okUEtgX.jpeg?imageMogr2/auto-orient/thumbnail/1600x/format/webp/quality/85/interlace/1" alt="海湾与树剪影">
+        <img class="hero-slide" src="https://assets.tanteng.space/photo-rSNRsiAk7HhLbshq.jpeg?imageMogr2/auto-orient/thumbnail/1600x/format/webp/quality/85/interlace/1" alt="湖边藤椅">
+        <img class="hero-slide" src="https://assets.tanteng.space/photo-JyXzoYOFGbhSV5Hg.jpeg?imageMogr2/auto-orient/thumbnail/1600x/format/webp/quality/85/interlace/1" alt="维多利亚港湾">
+        <img class="hero-slide" src="https://assets.tanteng.space/photo-vsfQDG5Zognb3Xz2.jpeg?imageMogr2/auto-orient/thumbnail/1600x/format/webp/quality/85/interlace/1" alt="通信基站">
         <div class="hero-overlay"></div>
         <div class="hero-content">
             <h1>Tony(谈腾)</h1>
