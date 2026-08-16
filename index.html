@@ -78,17 +78,17 @@
             opacity: 0;
         }
 
-        /* 首图：默认可见（用 nth-of-type 在 <img> 兄弟中计数，避开 <nav> 占第 1 位的干扰） */
-        .hero-slide:nth-of-type(1) {
+        /* 首图：用 data-index 属性选择器，不依赖 DOM 结构（picture 包裹后 nth-of-type 失效） */
+        .hero-slide[data-index="1"] {
             opacity: 1;  /* 静态首图：首屏直接显示，无淡入淡出过渡；img2-5 在 img1 底层之上循环覆盖 */
             object-position: center 60%;
         }
 
         /* 2-5 图：依次 snap 覆盖首图（step-end 瞬间切换，无淡入淡出灰阶过渡） */
-        .hero-slide:nth-of-type(2) { animation: hero-snap 12.5s 2.5s infinite step-end; object-position: center 60%; }
-        .hero-slide:nth-of-type(3) { animation: hero-snap 12.5s 5s infinite step-end; object-position: center 70%; }
-        .hero-slide:nth-of-type(4) { animation: hero-snap 12.5s 7.5s infinite step-end; object-position: center 60%; }
-        .hero-slide:nth-of-type(5) { animation: hero-snap 12.5s 10s infinite step-end; object-position: center 70%; }
+        .hero-slide[data-index="2"] { animation: hero-snap 12.5s 2.5s infinite step-end; object-position: center 60%; }
+        .hero-slide[data-index="3"] { animation: hero-snap 12.5s 5s infinite step-end; object-position: center 70%; }
+        .hero-slide[data-index="4"] { animation: hero-snap 12.5s 7.5s infinite step-end; object-position: center 60%; }
+        .hero-slide[data-index="5"] { animation: hero-snap 12.5s 10s infinite step-end; object-position: center 70%; }
 
         /* step-end: 0-20% 区间可见（instant snap on），20% snap 到 hidden（instant off），20-100% 隐藏 */
         @keyframes hero-snap {
@@ -426,11 +426,11 @@
                 max-width: 600px;
             }
             /* H5 上：容器竖屏 → 图片水平超出 → object-position X 控水平裁切 */
-            .hero-slide:nth-of-type(1) { object-position: 50% center; }  /* 海滩游客：X 50% 中央 */
-            .hero-slide:nth-of-type(2) { object-position: 26% center; }  /* 沙滩躺椅：X 26% 让主体居中 */
-            .hero-slide:nth-of-type(3) { object-position: 50% center; }  /* 海湾+树：X 50% 中央 */
-            .hero-slide:nth-of-type(4) { object-position: 50% center; }  /* 维多利亚港湾：X 50% 中央 */
-            .hero-slide:nth-of-type(5) { object-position: 32% center; }  /* 通信基站：X 32% 让主体居中 */
+            .hero-slide[data-index="1"] { object-position: 50% center; }  /* 海滩游客：X 50% 中央 */
+            .hero-slide[data-index="2"] { object-position: 26% center; }  /* 沙滩躺椅：X 26% 让主体居中 */
+            .hero-slide[data-index="3"] { object-position: 50% center; }  /* 海湾+树：X 50% 中央 */
+            .hero-slide[data-index="4"] { object-position: 50% center; }  /* 维多利亚港湾：X 50% 中央 */
+            .hero-slide[data-index="5"] { object-position: 32% center; }  /* 通信基站：X 32% 让主体居中 */
         }
 
         /* 手机 */
@@ -502,27 +502,27 @@
 <picture>
             <source media="(min-width: 769px)" srcset="https://assets.tanteng.space/photo-1ofgyFsSJJYZJAvK.jpeg?imageMogr2/auto-orient/thumbnail/1920x/format/webp/quality/90/interlace/1">
             <source srcset="https://assets.tanteng.space/photo-1ofgyFsSJJYZJAvK.jpeg?imageMogr2/auto-orient/thumbnail/640x/format/webp/quality/85/interlace/1">
-            <img class="hero-slide" src="https://assets.tanteng.space/photo-1ofgyFsSJJYZJAvK.jpeg?imageMogr2/auto-orient/thumbnail/640x/format/webp/quality/85/interlace/1" alt="海滩游客" fetchpriority="high">
+            <img class="hero-slide" data-index="1" src="https://assets.tanteng.space/photo-1ofgyFsSJJYZJAvK.jpeg?imageMogr2/auto-orient/thumbnail/640x/format/webp/quality/85/interlace/1" alt="海滩游客" fetchpriority="high">
         </picture>
         <picture>
             <source media="(min-width: 769px)" srcset="https://assets.tanteng.space/photo-XBqNl2lDtd7m4THh.jpeg?imageMogr2/auto-orient/thumbnail/1920x/format/webp/quality/90/interlace/1">
             <source srcset="https://assets.tanteng.space/photo-XBqNl2lDtd7m4THh.jpeg?imageMogr2/auto-orient/thumbnail/640x/format/webp/quality/85/interlace/1">
-            <img class="hero-slide" src="https://assets.tanteng.space/photo-XBqNl2lDtd7m4THh.jpeg?imageMogr2/auto-orient/thumbnail/640x/format/webp/quality/85/interlace/1" alt="沙滩躺椅">
+            <img class="hero-slide" data-index="2" src="https://assets.tanteng.space/photo-XBqNl2lDtd7m4THh.jpeg?imageMogr2/auto-orient/thumbnail/640x/format/webp/quality/85/interlace/1" alt="沙滩躺椅">
         </picture>
         <picture>
             <source media="(min-width: 769px)" srcset="https://assets.tanteng.space/photo-OoK3B5mA5okUEtgX.jpeg?imageMogr2/auto-orient/thumbnail/1920x/format/webp/quality/90/interlace/1">
             <source srcset="https://assets.tanteng.space/photo-OoK3B5mA5okUEtgX.jpeg?imageMogr2/auto-orient/thumbnail/640x/format/webp/quality/85/interlace/1">
-            <img class="hero-slide" src="https://assets.tanteng.space/photo-OoK3B5mA5okUEtgX.jpeg?imageMogr2/auto-orient/thumbnail/640x/format/webp/quality/85/interlace/1" alt="海湾与树剪影">
+            <img class="hero-slide" data-index="3" src="https://assets.tanteng.space/photo-OoK3B5mA5okUEtgX.jpeg?imageMogr2/auto-orient/thumbnail/640x/format/webp/quality/85/interlace/1" alt="海湾与树剪影">
         </picture>
         <picture>
             <source media="(min-width: 769px)" srcset="https://assets.tanteng.space/photo-JyXzoYOFGbhSV5Hg.jpeg?imageMogr2/auto-orient/thumbnail/1920x/format/webp/quality/90/interlace/1">
             <source srcset="https://assets.tanteng.space/photo-JyXzoYOFGbhSV5Hg.jpeg?imageMogr2/auto-orient/thumbnail/640x/format/webp/quality/85/interlace/1">
-            <img class="hero-slide" src="https://assets.tanteng.space/photo-JyXzoYOFGbhSV5Hg.jpeg?imageMogr2/auto-orient/thumbnail/640x/format/webp/quality/85/interlace/1" alt="维多利亚港湾">
+            <img class="hero-slide" data-index="4" src="https://assets.tanteng.space/photo-JyXzoYOFGbhSV5Hg.jpeg?imageMogr2/auto-orient/thumbnail/640x/format/webp/quality/85/interlace/1" alt="维多利亚港湾">
         </picture>
         <picture>
             <source media="(min-width: 769px)" srcset="https://assets.tanteng.space/photo-vsfQDG5Zognb3Xz2.jpeg?imageMogr2/auto-orient/thumbnail/1920x/format/webp/quality/90/interlace/1">
             <source srcset="https://assets.tanteng.space/photo-vsfQDG5Zognb3Xz2.jpeg?imageMogr2/auto-orient/thumbnail/640x/format/webp/quality/85/interlace/1">
-            <img class="hero-slide" src="https://assets.tanteng.space/photo-vsfQDG5Zognb3Xz2.jpeg?imageMogr2/auto-orient/thumbnail/640x/format/webp/quality/85/interlace/1" alt="通信基站">
+            <img class="hero-slide" data-index="5" src="https://assets.tanteng.space/photo-vsfQDG5Zognb3Xz2.jpeg?imageMogr2/auto-orient/thumbnail/640x/format/webp/quality/85/interlace/1" alt="通信基站">
         </picture>
         <div class="hero-overlay"></div>
         <div class="hero-content">
