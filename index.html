@@ -40,6 +40,9 @@
     <link rel="icon" type="image/png" href="/favicon.png">
     <link rel="apple-touch-icon" href="/favicon.png">
 
+    <!-- 预加载首图，避免轮播首图出现灰色过渡 -->
+    <link rel="preload" as="image" href="https://assets.tanteng.space/photo-1ofgyFsSJJYZJAvK.jpeg?imageMogr2/auto-orient/thumbnail/800x/format/webp/quality/85/interlace/1">
+
     <style>
         * {
             margin: 0;
@@ -494,7 +497,7 @@
                 <li><a href="https://blog.tanteng.space/about/" target="_blank" rel="noopener">关于</a></li>
             </ul>
         </nav>
-        <img class="hero-slide" src="https://assets.tanteng.space/photo-1ofgyFsSJJYZJAvK.jpeg?imageMogr2/auto-orient/thumbnail/800x/format/webp/quality/85/interlace/1" alt="海滩游客">
+        <img class="hero-slide" src="https://assets.tanteng.space/photo-1ofgyFsSJJYZJAvK.jpeg?imageMogr2/auto-orient/thumbnail/800x/format/webp/quality/85/interlace/1" alt="海滩游客" fetchpriority="high">
         <img class="hero-slide" src="https://assets.tanteng.space/photo-XBqNl2lDtd7m4THh.jpeg?imageMogr2/auto-orient/thumbnail/1600x/format/webp/quality/85/interlace/1" alt="沙滩躺椅">
         <img class="hero-slide" src="https://assets.tanteng.space/photo-OoK3B5mA5okUEtgX.jpeg?imageMogr2/auto-orient/thumbnail/1600x/format/webp/quality/85/interlace/1" alt="海湾与树剪影">
         <img class="hero-slide" src="https://assets.tanteng.space/photo-JyXzoYOFGbhSV5Hg.jpeg?imageMogr2/auto-orient/thumbnail/1600x/format/webp/quality/85/interlace/1" alt="维多利亚港湾">
