@@ -63,7 +63,7 @@
             height: 60vh;
             min-height: 380px;
             overflow: hidden;
-            background-color: transparent;  /* img1 是 opacity:1 静态首图，加载期间透出 body 底色，避免黑色闪屏错觉 */
+            background-color: transparent;  /* inline style 已用首图作 background-image，body 底色不会露出 */
             padding: 0;
         }
 
@@ -77,16 +77,17 @@
             opacity: 0;
         }
 
-        /* 首图：默认可见，不淡入，只在其他图轮过一轮后回到首图时淡入 */
-        .hero-slide:nth-child(1) {
+        /* 首图：默认可见（用 nth-of-type 在 <img> 兄弟中计数，避开 <nav> 占第 1 位的干扰） */
+        .hero-slide:nth-of-type(1) {
             opacity: 1;  /* 静态首图：首屏直接显示，无淡入淡出过渡；img2-5 在 img1 底层之上循环覆盖 */
             object-position: center 60%;
         }
 
-        .hero-slide:nth-child(2) { animation: hero-snap 12.5s 2.5s infinite step-end; object-position: center 60%; }  /* step-end: 0-20% 可见，20% snap 到 hidden */
-        .hero-slide:nth-child(3) { animation: hero-snap 12.5s 5s infinite step-end; object-position: center 70%; }
-        .hero-slide:nth-child(4) { animation: hero-snap 12.5s 7.5s infinite step-end; object-position: center 60%; }
-        .hero-slide:nth-child(5) { animation: hero-snap 12.5s 10s infinite step-end; object-position: center 70%; }
+        /* 2-5 图：依次 snap 覆盖首图（step-end 瞬间切换，无淡入淡出灰阶过渡） */
+        .hero-slide:nth-of-type(2) { animation: hero-snap 12.5s 2.5s infinite step-end; object-position: center 60%; }
+        .hero-slide:nth-of-type(3) { animation: hero-snap 12.5s 5s infinite step-end; object-position: center 70%; }
+        .hero-slide:nth-of-type(4) { animation: hero-snap 12.5s 7.5s infinite step-end; object-position: center 60%; }
+        .hero-slide:nth-of-type(5) { animation: hero-snap 12.5s 10s infinite step-end; object-position: center 70%; }
 
         /* step-end: 0-20% 区间可见（instant snap on），20% snap 到 hidden（instant off），20-100% 隐藏 */
         @keyframes hero-snap {
@@ -488,7 +489,7 @@
 </head>
 <body>
     <!-- 头部区域 - 照片轮播 hero -->
-    <header class="hero">
+    <header class="hero" style="background-image: url('https://assets.tanteng.space/photo-1ofgyFsSJJYZJAvK.jpeg?imageMogr2/auto-orient/thumbnail/800x/format/webp/quality/85/interlace/1'); background-size: cover; background-position: center 60%;">
         <nav class="top-nav" role="navigation">
             <ul class="top-nav-list">
                 <li><a href="/">首页</a></li>
