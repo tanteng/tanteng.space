@@ -41,7 +41,8 @@
     <link rel="apple-touch-icon" href="/favicon.png">
 
     <!-- 预加载首图，避免轮播首图出现灰色过渡 -->
-    <link rel="preload" as="image" href="https://assets.tanteng.space/photo-1ofgyFsSJJYZJAvK.jpeg?imageMogr2/auto-orient/thumbnail/800x/format/webp/quality/85/interlace/1">
+    <link rel="preload" as="image" media="(min-width: 769px)" href="https://assets.tanteng.space/photo-1ofgyFsSJJYZJAvK.jpeg?imageMogr2/auto-orient/thumbnail/1920x/format/webp/quality/90/interlace/1">
+    <link rel="preload" as="image" media="(max-width: 768px)" href="https://assets.tanteng.space/photo-1ofgyFsSJJYZJAvK.jpeg?imageMogr2/auto-orient/thumbnail/640x/format/webp/quality/85/interlace/1">
 
     <style>
         * {
@@ -425,11 +426,11 @@
                 max-width: 600px;
             }
             /* H5 上：容器竖屏 → 图片水平超出 → object-position X 控水平裁切 */
-            .hero-slide:nth-child(1) { object-position: 50% center; }  /* 海滩游客：X 50% 中央 */
-            .hero-slide:nth-child(2) { object-position: 26% center; }  /* 沙滩躺椅：X 26% 让主体居中 */
-            .hero-slide:nth-child(3) { object-position: 50% center; }  /* 海湾+树：X 50% 中央 */
-            .hero-slide:nth-child(4) { object-position: 50% center; }  /* 维多利亚港湾：X 50% 中央 */
-            .hero-slide:nth-child(5) { object-position: 32% center; }  /* 通信基站：X 32% 让主体居中 */
+            .hero-slide:nth-of-type(1) { object-position: 50% center; }  /* 海滩游客：X 50% 中央 */
+            .hero-slide:nth-of-type(2) { object-position: 26% center; }  /* 沙滩躺椅：X 26% 让主体居中 */
+            .hero-slide:nth-of-type(3) { object-position: 50% center; }  /* 海湾+树：X 50% 中央 */
+            .hero-slide:nth-of-type(4) { object-position: 50% center; }  /* 维多利亚港湾：X 50% 中央 */
+            .hero-slide:nth-of-type(5) { object-position: 32% center; }  /* 通信基站：X 32% 让主体居中 */
         }
 
         /* 手机 */
@@ -489,7 +490,7 @@
 </head>
 <body>
     <!-- 头部区域 - 照片轮播 hero -->
-    <header class="hero" style="background-image: url('https://assets.tanteng.space/photo-1ofgyFsSJJYZJAvK.jpeg?imageMogr2/auto-orient/thumbnail/800x/format/webp/quality/85/interlace/1'); background-size: cover; background-position: center 60%;">
+    <header class="hero" style="background-image: url('https://assets.tanteng.space/photo-1ofgyFsSJJYZJAvK.jpeg?imageMogr2/auto-orient/thumbnail/1920x/format/webp/quality/90/interlace/1'); background-size: cover; background-position: center 60%;">
         <nav class="top-nav" role="navigation">
             <ul class="top-nav-list">
                 <li><a href="/">首页</a></li>
@@ -498,11 +499,31 @@
                 <li><a href="https://blog.tanteng.space/about/" target="_blank" rel="noopener">关于</a></li>
             </ul>
         </nav>
-        <img class="hero-slide" src="https://assets.tanteng.space/photo-1ofgyFsSJJYZJAvK.jpeg?imageMogr2/auto-orient/thumbnail/800x/format/webp/quality/85/interlace/1" alt="海滩游客" fetchpriority="high">
-        <img class="hero-slide" src="https://assets.tanteng.space/photo-XBqNl2lDtd7m4THh.jpeg?imageMogr2/auto-orient/thumbnail/1600x/format/webp/quality/85/interlace/1" alt="沙滩躺椅">
-        <img class="hero-slide" src="https://assets.tanteng.space/photo-OoK3B5mA5okUEtgX.jpeg?imageMogr2/auto-orient/thumbnail/1600x/format/webp/quality/85/interlace/1" alt="海湾与树剪影">
-        <img class="hero-slide" src="https://assets.tanteng.space/photo-JyXzoYOFGbhSV5Hg.jpeg?imageMogr2/auto-orient/thumbnail/1600x/format/webp/quality/85/interlace/1" alt="维多利亚港湾">
-        <img class="hero-slide" src="https://assets.tanteng.space/photo-vsfQDG5Zognb3Xz2.jpeg?imageMogr2/auto-orient/thumbnail/1600x/format/webp/quality/85/interlace/1" alt="通信基站">
+<picture>
+            <source media="(min-width: 769px)" srcset="https://assets.tanteng.space/photo-1ofgyFsSJJYZJAvK.jpeg?imageMogr2/auto-orient/thumbnail/1920x/format/webp/quality/90/interlace/1">
+            <source srcset="https://assets.tanteng.space/photo-1ofgyFsSJJYZJAvK.jpeg?imageMogr2/auto-orient/thumbnail/640x/format/webp/quality/85/interlace/1">
+            <img class="hero-slide" src="https://assets.tanteng.space/photo-1ofgyFsSJJYZJAvK.jpeg?imageMogr2/auto-orient/thumbnail/640x/format/webp/quality/85/interlace/1" alt="海滩游客" fetchpriority="high">
+        </picture>
+        <picture>
+            <source media="(min-width: 769px)" srcset="https://assets.tanteng.space/photo-XBqNl2lDtd7m4THh.jpeg?imageMogr2/auto-orient/thumbnail/1920x/format/webp/quality/90/interlace/1">
+            <source srcset="https://assets.tanteng.space/photo-XBqNl2lDtd7m4THh.jpeg?imageMogr2/auto-orient/thumbnail/640x/format/webp/quality/85/interlace/1">
+            <img class="hero-slide" src="https://assets.tanteng.space/photo-XBqNl2lDtd7m4THh.jpeg?imageMogr2/auto-orient/thumbnail/640x/format/webp/quality/85/interlace/1" alt="沙滩躺椅">
+        </picture>
+        <picture>
+            <source media="(min-width: 769px)" srcset="https://assets.tanteng.space/photo-OoK3B5mA5okUEtgX.jpeg?imageMogr2/auto-orient/thumbnail/1920x/format/webp/quality/90/interlace/1">
+            <source srcset="https://assets.tanteng.space/photo-OoK3B5mA5okUEtgX.jpeg?imageMogr2/auto-orient/thumbnail/640x/format/webp/quality/85/interlace/1">
+            <img class="hero-slide" src="https://assets.tanteng.space/photo-OoK3B5mA5okUEtgX.jpeg?imageMogr2/auto-orient/thumbnail/640x/format/webp/quality/85/interlace/1" alt="海湾与树剪影">
+        </picture>
+        <picture>
+            <source media="(min-width: 769px)" srcset="https://assets.tanteng.space/photo-JyXzoYOFGbhSV5Hg.jpeg?imageMogr2/auto-orient/thumbnail/1920x/format/webp/quality/90/interlace/1">
+            <source srcset="https://assets.tanteng.space/photo-JyXzoYOFGbhSV5Hg.jpeg?imageMogr2/auto-orient/thumbnail/640x/format/webp/quality/85/interlace/1">
+            <img class="hero-slide" src="https://assets.tanteng.space/photo-JyXzoYOFGbhSV5Hg.jpeg?imageMogr2/auto-orient/thumbnail/640x/format/webp/quality/85/interlace/1" alt="维多利亚港湾">
+        </picture>
+        <picture>
+            <source media="(min-width: 769px)" srcset="https://assets.tanteng.space/photo-vsfQDG5Zognb3Xz2.jpeg?imageMogr2/auto-orient/thumbnail/1920x/format/webp/quality/90/interlace/1">
+            <source srcset="https://assets.tanteng.space/photo-vsfQDG5Zognb3Xz2.jpeg?imageMogr2/auto-orient/thumbnail/640x/format/webp/quality/85/interlace/1">
+            <img class="hero-slide" src="https://assets.tanteng.space/photo-vsfQDG5Zognb3Xz2.jpeg?imageMogr2/auto-orient/thumbnail/640x/format/webp/quality/85/interlace/1" alt="通信基站">
+        </picture>
         <div class="hero-overlay"></div>
         <div class="hero-content">
             <h1>Tony(谈腾)</h1>
