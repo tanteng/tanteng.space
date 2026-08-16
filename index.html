@@ -60,7 +60,7 @@
             height: 60vh;
             min-height: 380px;
             overflow: hidden;
-            background: #000;
+            background-color: #1a1a1a;  /* 深色 fallback（非纯黑），inline style 已设 background-image */
             padding: 0;
         }
 
@@ -495,10 +495,10 @@
 </head>
 <body>
     <!-- 头部区域 - 照片轮播 hero -->
-    <header class="hero">
+    <header class="hero" style="background-image: url('https://assets.tanteng.space/photo-1ofgyFsSJJYZJAvK.jpeg?imageMogr2/auto-orient/thumbnail/1600x/format/webp/quality/85/interlace/1'); background-size: cover; background-position: center 60%;">
         <nav class="top-nav" role="navigation">
             <ul class="top-nav-list">
-                <li><a href="https://blog.tanteng.space" target="_blank" rel="noopener">文章</a></li>
+                <li><a href="https://blog.tanteng.space" target="_blank" rel="noopener">博客</a></li>
                 <li><a href="https://photos.tanteng.space" target="_blank" rel="noopener">相册</a></li>
                 <li><a href="mailto:tanteng@qq.com">关于</a></li>
             </ul>
