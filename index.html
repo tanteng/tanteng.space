@@ -75,7 +75,10 @@
         }
 
         /* 首图：默认可见，不淡入，只在其他图轮过一轮后回到首图时淡入 */
-        .hero-slide:nth-child(1) { animation: hero-fade 12.5s infinite; object-position: center 60%; }
+        .hero-slide:nth-child(1) {
+            opacity: 1;  /* 静态首图：首屏直接显示，无淡入淡出过渡；img2-5 在 img1 底层之上循环覆盖 */
+            object-position: center 60%;
+        }
 
         .hero-slide:nth-child(2) { animation: hero-fade 12.5s 2.5s infinite; object-position: center 60%; }
         .hero-slide:nth-child(3) { animation: hero-fade 12.5s 5s infinite; object-position: center 70%; }
