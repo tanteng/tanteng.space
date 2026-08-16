@@ -60,7 +60,7 @@
             height: 60vh;
             min-height: 380px;
             overflow: hidden;
-            background-color: #1a1a1a;  /* 深色 fallback（非纯黑），inline style 已设 background-image */
+            background-color: transparent;  /* img1 是 opacity:1 静态首图，加载期间透出 body 底色，避免黑色闪屏错觉 */
             padding: 0;
         }
 
