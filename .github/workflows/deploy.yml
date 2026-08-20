@@ -1,0 +1,51 @@
+# Sync static files to Tencent COS → Purge EdgeOne cache
+name: Deploy tanteng.space
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+# Prevent concurrent deployments
+concurrency:
+  group: deploy-tanteng-space
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Install coscli
+        run: |
+          curl -fsSL https://cosbrowser.cloud.tencent.com/software/coscli/coscli-linux-amd64 -o /usr/local/bin/coscli
+          chmod +x /usr/local/bin/coscli
+
+      - name: Install tccli
+        run: pip install tccli
+
+      - name: Upload to COS
+        run: |
+          coscli sync ./ cos://${{ secrets.TENCENT_BUCKET }}/ \
+            -r \
+            -e cos.${{ secrets.TENCENT_REGION }}.myqcloud.com \
+            -i ${{ secrets.TENCENT_SECRET_ID }} \
+            -k ${{ secrets.TENCENT_SECRET_KEY }} \
+            --exclude "^\.git/" \
+            --exclude "^\.github/" \
+            --force
+
+      - name: Purge EdgeOne Cache
+        env:
+          TENCENTCLOUD_SECRET_ID: ${{ secrets.TENCENT_SECRET_ID }}
+          TENCENTCLOUD_SECRET_KEY: ${{ secrets.TENCENT_SECRET_KEY }}
+        run: |
+          tccli teo CreatePurgeTask \
+            --region ap-guangzhou \
+            --ZoneId "${{ secrets.EDGEONE_ZONE_ID }}" \
+            --Type purge_host \
+            --Targets '["tanteng.space"]'
