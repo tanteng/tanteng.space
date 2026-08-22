@@ -2,8 +2,7 @@
 name: Deploy tanteng.space
 
 on:
-  push:
-    branches: ["main"]
+  # push trigger removed 2026-08-22 — auto-deploy disabled, manual dispatch only
   workflow_dispatch:
 
 # Prevent concurrent deployments
