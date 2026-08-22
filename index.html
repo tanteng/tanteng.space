@@ -60,8 +60,7 @@
             height: 60vh;
             min-height: 380px;
             overflow: hidden;
-            background-color: transparent;  /* inline style 已用首图作 background-image，body 底色不会露出 */
-            padding: 0;
+            /* 加载前底色由 inline background-image 占位，无需显式 background-color */
         }
 
         .hero-slide {
@@ -132,8 +131,6 @@
         }
         .top-nav-list {
             list-style: none;
-            padding: 0;
-            margin: 0;
             display: flex;
             gap: 28px;
             align-items: center;
@@ -486,7 +483,8 @@
 </head>
 <body>
     <!-- 头部区域 - 照片轮播 hero -->
-    <header class="hero" style="background-image: url('https://assets.tanteng.space/photo-1ofgyFsSJJYZJAvK.jpeg?imageMogr2/auto-orient/thumbnail/1920x/format/webp/quality/90/interlace/1'); background-size: cover; background-position: center 60%;">
+    <!-- 加载前占位用 640x（PC 端 <picture> 仍选 1920x，避免双倍下载同一大图） -->
+    <header class="hero" style="background-image: url('https://assets.tanteng.space/photo-1ofgyFsSJJYZJAvK.jpeg?imageMogr2/auto-orient/thumbnail/640x/format/webp/quality/85/interlace/1'); background-size: cover; background-position: center 60%;">
         <nav class="top-nav" role="navigation">
             <ul class="top-nav-list">
                 <li><a href="/">首页</a></li>
@@ -498,27 +496,27 @@
 <picture>
             <source media="(min-width: 769px)" srcset="https://assets.tanteng.space/photo-1ofgyFsSJJYZJAvK.jpeg?imageMogr2/auto-orient/thumbnail/1920x/format/webp/quality/90/interlace/1">
             <source srcset="https://assets.tanteng.space/photo-1ofgyFsSJJYZJAvK.jpeg?imageMogr2/auto-orient/thumbnail/640x/format/webp/quality/85/interlace/1">
-            <img class="hero-slide" data-index="1" src="https://assets.tanteng.space/photo-1ofgyFsSJJYZJAvK.jpeg?imageMogr2/auto-orient/thumbnail/640x/format/webp/quality/85/interlace/1" alt="海滩游客" fetchpriority="high">
+            <img class="hero-slide" data-index="1" alt="海滩游客" fetchpriority="high">
         </picture>
         <picture>
             <source media="(min-width: 769px)" srcset="https://assets.tanteng.space/photo-XBqNl2lDtd7m4THh.jpeg?imageMogr2/auto-orient/thumbnail/1920x/format/webp/quality/90/interlace/1">
             <source srcset="https://assets.tanteng.space/photo-XBqNl2lDtd7m4THh.jpeg?imageMogr2/auto-orient/thumbnail/640x/format/webp/quality/85/interlace/1">
-            <img class="hero-slide" data-index="2" src="https://assets.tanteng.space/photo-XBqNl2lDtd7m4THh.jpeg?imageMogr2/auto-orient/thumbnail/640x/format/webp/quality/85/interlace/1" alt="沙滩躺椅">
+            <img class="hero-slide" data-index="2" alt="沙滩躺椅">
         </picture>
         <picture>
             <source media="(min-width: 769px)" srcset="https://assets.tanteng.space/photo-OoK3B5mA5okUEtgX.jpeg?imageMogr2/auto-orient/thumbnail/1920x/format/webp/quality/90/interlace/1">
             <source srcset="https://assets.tanteng.space/photo-OoK3B5mA5okUEtgX.jpeg?imageMogr2/auto-orient/thumbnail/640x/format/webp/quality/85/interlace/1">
-            <img class="hero-slide" data-index="3" src="https://assets.tanteng.space/photo-OoK3B5mA5okUEtgX.jpeg?imageMogr2/auto-orient/thumbnail/640x/format/webp/quality/85/interlace/1" alt="海湾与树剪影">
+            <img class="hero-slide" data-index="3" alt="海湾与树剪影">
         </picture>
         <picture>
             <source media="(min-width: 769px)" srcset="https://assets.tanteng.space/photo-JyXzoYOFGbhSV5Hg.jpeg?imageMogr2/auto-orient/thumbnail/1920x/format/webp/quality/90/interlace/1">
             <source srcset="https://assets.tanteng.space/photo-JyXzoYOFGbhSV5Hg.jpeg?imageMogr2/auto-orient/thumbnail/640x/format/webp/quality/85/interlace/1">
-            <img class="hero-slide" data-index="4" src="https://assets.tanteng.space/photo-JyXzoYOFGbhSV5Hg.jpeg?imageMogr2/auto-orient/thumbnail/640x/format/webp/quality/85/interlace/1" alt="维多利亚港湾">
+            <img class="hero-slide" data-index="4" alt="维多利亚港湾">
         </picture>
         <picture>
             <source media="(min-width: 769px)" srcset="https://assets.tanteng.space/photo-vsfQDG5Zognb3Xz2.jpeg?imageMogr2/auto-orient/thumbnail/1920x/format/webp/quality/90/interlace/1">
             <source srcset="https://assets.tanteng.space/photo-vsfQDG5Zognb3Xz2.jpeg?imageMogr2/auto-orient/thumbnail/640x/format/webp/quality/85/interlace/1">
-            <img class="hero-slide" data-index="5" src="https://assets.tanteng.space/photo-vsfQDG5Zognb3Xz2.jpeg?imageMogr2/auto-orient/thumbnail/640x/format/webp/quality/85/interlace/1" alt="通信基站">
+            <img class="hero-slide" data-index="5" alt="通信基站">
         </picture>
         <div class="hero-overlay"></div>
         <div class="hero-content">
