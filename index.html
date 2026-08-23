@@ -5,34 +5,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- SEO Meta -->
-    <title>Tony老师的个人空间 | 谈腾 | 深圳</title>
-    <meta name="description" content="谈腾。来自湖北，现居深圳。技术博客分享AI、Golang、K8S相关文章，相册频道记录日常与旅行。">
-    <meta name="keywords" content="谈腾,Tony,深圳,摄影,个人博客,AI,Golang">
+    <title>谈腾（Tony）| 腾讯软件工程师 · AI/Golang 技术博客与摄影作品</title>
+    <meta name="description" content="谈腾（Tony）的个人主页。来自湖北，现居深圳，任职腾讯 Software Developer。技术博客分享 AI、Golang、K8S、LLM、Harness 等文章；旅行摄影作品记录深圳、香港的日常与旅行。联系：tanteng@qq.com">
+    <meta name="keywords" content="谈腾,Tony,Tony老师,深圳,腾讯,摄影,个人博客,AI,Golang,K8S,Kubernetes,LLM,期权,Harness,Agent">
     <meta name="author" content="谈腾">
-    <meta name="robots" content="index, follow">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
     <meta name="baidu-site-verification" content="codeva-Vwl6tppk52" />
     <link rel="canonical" href="https://tanteng.space">
 
+    <!-- 性能：预连接到图片 CDN（hero/grid 大量引用 assets.tanteng.space） -->
+    <link rel="preconnect" href="https://assets.tanteng.space" crossorigin>
+    <link rel="dns-prefetch" href="https://assets.tanteng.space">
+
     <!-- Open Graph -->
-    <meta property="og:title" content="Tony老师的个人空间">
-    <meta property="og:description" content="欢迎访问我的个人空间">
+    <meta property="og:title" content="谈腾（Tony）| 腾讯软件工程师 · AI/Golang 技术博客与摄影作品">
+    <meta property="og:description" content="谈腾（Tony）的个人主页。来自湖北，现居深圳，任职腾讯 Software Developer。技术博客分享 AI、Golang、K8S、LLM 等文章；旅行摄影作品记录深圳、香港的日常与旅行。">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://tanteng.space">
     <meta property="og:site_name" content="Tony老师的个人空间">
     <meta property="og:locale" content="zh_CN">
+    <meta property="og:locale:alternate" content="en_US">
     <meta property="og:image" content="https://tanteng.space/og-image.png">
+    <meta property="og:image:secure_url" content="https://tanteng.space/og-image.png">
+    <meta property="og:image:type" content="image/png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
-    <meta property="og:image:alt" content="Tony老师的个人空间">
+    <meta property="og:image:alt" content="Tony老师的个人空间预览图">
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Tony老师的个人空间">
-    <meta name="twitter:description" content="谈腾。来自湖北，现居深圳。">
+    <meta name="twitter:title" content="谈腾（Tony）| 腾讯软件工程师 · AI/Golang 技术博客与摄影作品">
+    <meta name="twitter:description" content="来自湖北，现居深圳。技术博客 + 旅行摄影。">
     <meta name="twitter:image" content="https://tanteng.space/og-image.png">
-    <meta name="twitter:image:alt" content="Tony老师的个人空间">
+    <meta name="twitter:image:alt" content="Tony老师的个人空间预览图">
 
-    <!-- 传统 image_src 兼容 -->
+    <!-- 移动端 + 传统 image_src 兼容 -->
+    <meta name="theme-color" content="#f5f5f5">
     <link rel="image_src" href="https://tanteng.space/og-image.png">
 
     <!-- Favicon -->
@@ -648,70 +656,309 @@
         </p>
     </footer>
 
-    <!-- JSON-LD 结构化数据 -->
+    <!-- JSON-LD 结构化数据（@graph：WebSite / Person / 频道导航 / 摄影图集 / 最新文章） -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
-        "@type": "Person",
-        "name": "谈腾",
-        "alternateName": "Tony",
-        "description": "来自湖北，现居深圳。",
-        "url": "https://tanteng.space",
-        "image": {
-            "@type": "ImageObject",
-            "url": "https://tanteng.space/og-image.png",
-            "width": 1200,
-            "height": 630
-        },
-        "homeLocation": {
-            "@type": "Place",
-            "name": "深圳"
-        },
-        "jobTitle": "Software Developer",
-        "worksFor": {
-            "@type": "Organization",
-            "name": "Tencent"
-        },
-        "knowsAbout": [
-            "Golang",
-            "AI",
-            "摄影"
-        ],
-        "sameAs": [
-            "https://blog.tanteng.space",
-            "https://photos.tanteng.space"
-        ],
-        "email": "tanteng@qq.com",
-        "mainEntity": [
+        "@graph": [
             {
-                "@type": "BlogPosting",
-                "headline": "Harness 工程：当大模型变成 CPU，谁来写这个操作系统",
-                "url": "https://blog.tanteng.space/posts/harness-engineering-ai-agent-os/",
-                "datePublished": "2026-08-03"
+                "@type": "WebSite",
+                "@id": "https://tanteng.space/#website",
+                "url": "https://tanteng.space",
+                "name": "Tony老师的个人空间",
+                "alternateName": "谈腾的个人空间",
+                "inLanguage": "zh-CN",
+                "description": "谈腾（Tony）的个人主页。来自湖北，现居深圳，任职腾讯 Software Developer。分享 AI、Golang、K8S、LLM 等技术文章，旅行摄影作品收录于相册频道。",
+                "publisher": { "@id": "https://tanteng.space/#person" },
+                "mainEntity": { "@id": "https://tanteng.space/#person" },
+                "potentialAction": {
+                    "@type": "SearchAction",
+                    "target": {
+                        "@type": "EntryPoint",
+                        "urlTemplate": "https://blog.tanteng.space/?s={search_term_string}"
+                    },
+                    "query-input": "required name=search_term_string"
+                }
             },
             {
-                "@type": "BlogPosting",
-                "headline": "大模型是如何一步步提升回答质量的",
-                "url": "https://blog.tanteng.space/posts/llm-answer-quality-optimization/",
-                "datePublished": "2026-07-28"
+                "@type": "Person",
+                "@id": "https://tanteng.space/#person",
+                "name": "谈腾",
+                "alternateName": ["Tony", "Tony老师", "tanteng"],
+                "description": "来自湖北，现居深圳。腾讯 Software Developer，专注于 AI、Golang、K8S、LLM、期权与摄影。",
+                "url": "https://tanteng.space",
+                "image": { "@id": "https://tanteng.space/#avatar" },
+                "homeLocation": {
+                    "@type": "Place",
+                    "name": "深圳",
+                    "address": { "@type": "PostalAddress", "addressCountry": "CN", "addressRegion": "广东", "addressLocality": "深圳" }
+                },
+                "jobTitle": "Software Developer",
+                "worksFor": {
+                    "@type": "Organization",
+                    "name": "Tencent",
+                    "url": "https://www.tencent.com"
+                },
+                "knowsAbout": ["Golang", "AI", "Kubernetes", "摄影", "LLM", "期权", "Harness Engineering", "Agent"],
+                "knowsLanguage": ["zh-CN", "en"],
+                "sameAs": [
+                    "https://blog.tanteng.space",
+                    "https://photos.tanteng.space",
+                    "https://www.instagram.com/tanteng1031/"
+                ],
+                "email": "mailto:tanteng@qq.com"
             },
             {
-                "@type": "BlogPosting",
-                "headline": "4 种强烈推荐使用期权的场景",
-                "url": "https://blog.tanteng.space/posts/4-recommended-options-strategies/",
-                "datePublished": "2026-07-25"
+                "@type": "ImageObject",
+                "@id": "https://tanteng.space/#avatar",
+                "url": "https://tanteng.space/avatar.jpeg",
+                "contentUrl": "https://tanteng.space/avatar.jpeg",
+                "name": "谈腾 Tony",
+                "caption": "谈腾的头像",
+                "creator": { "@id": "https://tanteng.space/#person" }
             },
             {
-                "@type": "BlogPosting",
-                "headline": "风险共担的反脆弱哲学——读塔勒布《非对称风险》",
-                "url": "https://blog.tanteng.space/posts/taleb-skin-in-the-game-reading-notes/",
-                "datePublished": "2026-07-16"
+                "@type": "ImageObject",
+                "@id": "https://tanteng.space/#og-image",
+                "url": "https://tanteng.space/og-image.png",
+                "contentUrl": "https://tanteng.space/og-image.png",
+                "width": 1200,
+                "height": 630,
+                "name": "Tony老师的个人空间预览图"
             },
             {
-                "@type": "BlogPosting",
-                "headline": "腾讯混元 Hy3 深度解析：295B MoE、快慢思考融合、Agent 能力跃升",
-                "url": "https://blog.tanteng.space/posts/tencent-hunyuan-hy3-analysis/",
-                "datePublished": "2026-07-09"
+                "@type": "ItemList",
+                "@id": "https://tanteng.space/#nav",
+                "name": "频道导航",
+                "itemListElement": [
+                    { "@type": "SiteNavigationElement", "position": 1, "name": "首页",  "url": "https://tanteng.space/" },
+                    { "@type": "SiteNavigationElement", "position": 2, "name": "博客",  "url": "https://blog.tanteng.space" },
+                    { "@type": "SiteNavigationElement", "position": 3, "name": "相册",  "url": "https://photos.tanteng.space" },
+                    { "@type": "SiteNavigationElement", "position": 4, "name": "关于",  "url": "https://blog.tanteng.space/about/" }
+                ]
+            },
+            {
+                "@type": "ImageGallery",
+                "@id": "https://tanteng.space/#hero",
+                "name": "Tony 摄影作品精选 — 香港",
+                "description": "浅水湾海滩、赤柱海湾、维多利亚港湾与城市风光",
+                "creator": { "@id": "https://tanteng.space/#person" },
+                "hasPart": [
+                    { "@id": "https://tanteng.space/#hero-1" },
+                    { "@id": "https://tanteng.space/#hero-2" },
+                    { "@id": "https://tanteng.space/#hero-3" },
+                    { "@id": "https://tanteng.space/#hero-4" },
+                    { "@id": "https://tanteng.space/#hero-5" }
+                ]
+            },
+            {
+                "@type": "ImageObject",
+                "@id": "https://tanteng.space/#hero-1",
+                "url": "https://photos.tanteng.space/p/VsikwHuO",
+                "contentUrl": "https://assets.tanteng.space/photo-1ofgyFsSJJYZJAvK.jpeg",
+                "thumbnailUrl": "https://assets.tanteng.space/photo-1ofgyFsSJJYZJAvK.jpeg?imageMogr2/auto-orient/thumbnail/400x/format/webp/quality/75/interlace/1",
+                "name": "浅水湾沙滩",
+                "caption": "浅水湾沙滩，香港",
+                "creator": { "@id": "https://tanteng.space/#person" },
+                "copyrightHolder": { "@id": "https://tanteng.space/#person" },
+                "keywords": "香港, 浅水湾, 沙滩, 海滩, 旅行"
+            },
+            {
+                "@type": "ImageObject",
+                "@id": "https://tanteng.space/#hero-2",
+                "url": "https://photos.tanteng.space/p/ViGIc2t9",
+                "contentUrl": "https://assets.tanteng.space/photo-XBqNl2lDtd7m4THh.jpeg",
+                "thumbnailUrl": "https://assets.tanteng.space/photo-XBqNl2lDtd7m4THh.jpeg?imageMogr2/auto-orient/thumbnail/400x/format/webp/quality/75/interlace/1",
+                "name": "浅水湾沙滩躺椅",
+                "caption": "浅水湾沙滩上的躺椅，香港",
+                "creator": { "@id": "https://tanteng.space/#person" },
+                "copyrightHolder": { "@id": "https://tanteng.space/#person" },
+                "keywords": "香港, 浅水湾, 沙滩, 躺椅, 旅行"
+            },
+            {
+                "@type": "ImageObject",
+                "@id": "https://tanteng.space/#hero-3",
+                "url": "https://photos.tanteng.space/p/4PdcKMBU",
+                "contentUrl": "https://assets.tanteng.space/photo-OoK3B5mA5okUEtgX.jpeg",
+                "thumbnailUrl": "https://assets.tanteng.space/photo-OoK3B5mA5okUEtgX.jpeg?imageMogr2/auto-orient/thumbnail/400x/format/webp/quality/75/interlace/1",
+                "name": "赤柱海湾与树剪影",
+                "caption": "赤柱海湾与树剪影，香港",
+                "creator": { "@id": "https://tanteng.space/#person" },
+                "copyrightHolder": { "@id": "https://tanteng.space/#person" },
+                "keywords": "香港, 赤柱, 海湾, 树, 剪影, 旅行"
+            },
+            {
+                "@type": "ImageObject",
+                "@id": "https://tanteng.space/#hero-4",
+                "url": "https://photos.tanteng.space",
+                "contentUrl": "https://assets.tanteng.space/photo-JyXzoYOFGbhSV5Hg.jpeg",
+                "thumbnailUrl": "https://assets.tanteng.space/photo-JyXzoYOFGbhSV5Hg.jpeg?imageMogr2/auto-orient/thumbnail/400x/format/webp/quality/75/interlace/1",
+                "name": "维多利亚港湾",
+                "caption": "维多利亚港湾，香港",
+                "creator": { "@id": "https://tanteng.space/#person" },
+                "copyrightHolder": { "@id": "https://tanteng.space/#person" },
+                "keywords": "香港, 维多利亚港, 港湾, 旅行"
+            },
+            {
+                "@type": "ImageObject",
+                "@id": "https://tanteng.space/#hero-5",
+                "url": "https://photos.tanteng.space",
+                "contentUrl": "https://assets.tanteng.space/photo-vsfQDG5Zognb3Xz2.jpeg",
+                "thumbnailUrl": "https://assets.tanteng.space/photo-vsfQDG5Zognb3Xz2.jpeg?imageMogr2/auto-orient/thumbnail/400x/format/webp/quality/75/interlace/1",
+                "name": "山顶通信基站",
+                "caption": "山顶通信基站，香港",
+                "creator": { "@id": "https://tanteng.space/#person" },
+                "copyrightHolder": { "@id": "https://tanteng.space/#person" },
+                "keywords": "香港, 山顶, 通信基站, 城市风光, 旅行"
+            },
+            {
+                "@type": "ImageGallery",
+                "@id": "https://tanteng.space/#photos",
+                "name": "最新照片",
+                "description": "深圳与香港旅行照片",
+                "creator": { "@id": "https://tanteng.space/#person" },
+                "hasPart": [
+                    { "@id": "https://tanteng.space/#photo-1" },
+                    { "@id": "https://tanteng.space/#photo-2" },
+                    { "@id": "https://tanteng.space/#photo-3" },
+                    { "@id": "https://tanteng.space/#photo-4" },
+                    { "@id": "https://tanteng.space/#photo-5" },
+                    { "@id": "https://tanteng.space/#photo-6" }
+                ]
+            },
+            {
+                "@type": "ImageObject",
+                "@id": "https://tanteng.space/#photo-1",
+                "url": "https://photos.tanteng.space/p/Youc1Kqo",
+                "contentUrl": "https://assets.tanteng.space/photo-UtUqlwIF3R3uLMXD.jpeg",
+                "thumbnailUrl": "https://assets.tanteng.space/photo-UtUqlwIF3R3uLMXD.jpeg?imageMogr2/auto-orient/thumbnail/400x/format/webp/quality/75/interlace/1",
+                "name": "赤柱黄色小屋",
+                "caption": "赤柱黄色小屋，香港",
+                "creator": { "@id": "https://tanteng.space/#person" },
+                "copyrightHolder": { "@id": "https://tanteng.space/#person" },
+                "keywords": "香港, 赤柱, 黄色小屋, 建筑, 旅行"
+            },
+            {
+                "@type": "ImageObject",
+                "@id": "https://tanteng.space/#photo-2",
+                "url": "https://photos.tanteng.space/p/4PdcKMBU",
+                "contentUrl": "https://assets.tanteng.space/photo-OoK3B5mA5okUEtgX.jpeg",
+                "thumbnailUrl": "https://assets.tanteng.space/photo-OoK3B5mA5okUEtgX.jpeg?imageMogr2/auto-orient/thumbnail/400x/format/webp/quality/75/interlace/1",
+                "name": "赤柱海滩",
+                "caption": "赤柱海滩，香港",
+                "creator": { "@id": "https://tanteng.space/#person" },
+                "copyrightHolder": { "@id": "https://tanteng.space/#person" },
+                "keywords": "香港, 赤柱, 海滩, 旅行"
+            },
+            {
+                "@type": "ImageObject",
+                "@id": "https://tanteng.space/#photo-3",
+                "url": "https://photos.tanteng.space/p/KxZK6amd",
+                "contentUrl": "https://assets.tanteng.space/photo-L2k2svtKUxL5ywdS.jpeg",
+                "thumbnailUrl": "https://assets.tanteng.space/photo-L2k2svtKUxL5ywdS.jpeg?imageMogr2/auto-orient/thumbnail/400x/format/webp/quality/75/interlace/1",
+                "name": "赤柱码头",
+                "caption": "赤柱码头，香港",
+                "creator": { "@id": "https://tanteng.space/#person" },
+                "copyrightHolder": { "@id": "https://tanteng.space/#person" },
+                "keywords": "香港, 赤柱, 码头, 旅行"
+            },
+            {
+                "@type": "ImageObject",
+                "@id": "https://tanteng.space/#photo-4",
+                "url": "https://photos.tanteng.space/p/VsikwHuO",
+                "contentUrl": "https://assets.tanteng.space/photo-1ofgyFsSJJYZJAvK.jpeg",
+                "thumbnailUrl": "https://assets.tanteng.space/photo-1ofgyFsSJJYZJAvK.jpeg?imageMogr2/auto-orient/thumbnail/400x/format/webp/quality/75/interlace/1",
+                "name": "浅水湾沙滩",
+                "caption": "浅水湾沙滩，香港",
+                "creator": { "@id": "https://tanteng.space/#person" },
+                "copyrightHolder": { "@id": "https://tanteng.space/#person" },
+                "keywords": "香港, 浅水湾, 沙滩, 旅行"
+            },
+            {
+                "@type": "ImageObject",
+                "@id": "https://tanteng.space/#photo-5",
+                "url": "https://photos.tanteng.space/p/ViGIc2t9",
+                "contentUrl": "https://assets.tanteng.space/photo-XBqNl2lDtd7m4THh.jpeg",
+                "thumbnailUrl": "https://assets.tanteng.space/photo-XBqNl2lDtd7m4THh.jpeg?imageMogr2/auto-orient/thumbnail/400x/format/webp/quality/75/interlace/1",
+                "name": "浅水湾沙滩",
+                "caption": "浅水湾沙滩，香港",
+                "creator": { "@id": "https://tanteng.space/#person" },
+                "copyrightHolder": { "@id": "https://tanteng.space/#person" },
+                "keywords": "香港, 浅水湾, 沙滩, 旅行"
+            },
+            {
+                "@type": "ImageObject",
+                "@id": "https://tanteng.space/#photo-6",
+                "url": "https://photos.tanteng.space/p/UvKgPTVR",
+                "contentUrl": "https://assets.tanteng.space/photo-7yrxKmu8z6iddPRC.jpeg",
+                "thumbnailUrl": "https://assets.tanteng.space/photo-7yrxKmu8z6iddPRC.jpeg?imageMogr2/auto-orient/thumbnail/400x/format/webp/quality/75/interlace/1",
+                "name": "浅水湾海滩",
+                "caption": "浅水湾海滩，香港",
+                "creator": { "@id": "https://tanteng.space/#person" },
+                "copyrightHolder": { "@id": "https://tanteng.space/#person" },
+                "keywords": "香港, 浅水湾, 海滩, 旅行"
+            },
+            {
+                "@type": "ItemList",
+                "@id": "https://tanteng.space/#posts",
+                "name": "最新文章",
+                "itemListElement": [
+                    {
+                        "@type": "ListItem",
+                        "position": 1,
+                        "item": {
+                            "@type": "BlogPosting",
+                            "headline": "Harness 工程：当大模型变成 CPU，谁来写这个操作系统",
+                            "url": "https://blog.tanteng.space/posts/harness-engineering-ai-agent-os/",
+                            "datePublished": "2026-08-03",
+                            "author": { "@id": "https://tanteng.space/#person" }
+                        }
+                    },
+                    {
+                        "@type": "ListItem",
+                        "position": 2,
+                        "item": {
+                            "@type": "BlogPosting",
+                            "headline": "大模型是如何一步步提升回答质量的",
+                            "url": "https://blog.tanteng.space/posts/llm-answer-quality-optimization/",
+                            "datePublished": "2026-07-28",
+                            "author": { "@id": "https://tanteng.space/#person" }
+                        }
+                    },
+                    {
+                        "@type": "ListItem",
+                        "position": 3,
+                        "item": {
+                            "@type": "BlogPosting",
+                            "headline": "4 种强烈推荐使用期权的场景",
+                            "url": "https://blog.tanteng.space/posts/4-recommended-options-strategies/",
+                            "datePublished": "2026-07-25",
+                            "author": { "@id": "https://tanteng.space/#person" }
+                        }
+                    },
+                    {
+                        "@type": "ListItem",
+                        "position": 4,
+                        "item": {
+                            "@type": "BlogPosting",
+                            "headline": "风险共担的反脆弱哲学——读塔勒布《非对称风险》",
+                            "url": "https://blog.tanteng.space/posts/taleb-skin-in-the-game-reading-notes/",
+                            "datePublished": "2026-07-16",
+                            "author": { "@id": "https://tanteng.space/#person" }
+                        }
+                    },
+                    {
+                        "@type": "ListItem",
+                        "position": 5,
+                        "item": {
+                            "@type": "BlogPosting",
+                            "headline": "腾讯混元 Hy3 深度解析：295B MoE、快慢思考融合、Agent 能力跃升",
+                            "url": "https://blog.tanteng.space/posts/tencent-hunyuan-hy3-analysis/",
+                            "datePublished": "2026-07-09",
+                            "author": { "@id": "https://tanteng.space/#person" }
+                        }
+                    }
+                ]
             }
         ]
     }

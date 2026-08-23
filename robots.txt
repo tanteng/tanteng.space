@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# 站点地图（如已部署请取消下一行注释并指向真实地址）
+# Sitemap: https://tanteng.space/sitemap.xml
