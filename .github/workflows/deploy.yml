@@ -1,8 +1,17 @@
 name: Deploy tanteng.space → COS + EdgeOne purge
 
-# 仅手动触发，无 push 自动部署（按 9/6 + 9/7 立）
+# 仅手动触发（按 9/6 + 9/7 立），无 push 自动部署
 on:
   workflow_dispatch:
+
+# 防止并发部署（同一个站点同一时间只允许一次）
+concurrency:
+  group: deploy-tanteng-space
+  cancel-in-progress: false
+
+# 仅读权限（GITHUB_TOKEN 只需 checkout）
+permissions:
+  contents: read
 
 jobs:
   deploy:
@@ -13,17 +22,27 @@ jobs:
       # Secrets（GitHub repo → Settings → Secrets and variables → Actions）
       TENCENTCLOUD_SECRET_ID: ${{ secrets.TENCENTCLOUD_SECRET_ID }}
       TENCENTCLOUD_SECRET_KEY: ${{ secrets.TENCENTCLOUD_SECRET_KEY }}
-      # 资源标识符（不是 secret，硬编码进 workflow）
+      # 资源标识符（非 secret，硬编码）
       COS_BUCKET: www-1303209934
       COS_REGION: ap-guangzhou
       EO_ZONE_ID: zone-3g912l176apo
       EO_TARGET_HOST: tanteng.space
+      # 待同步的静态文件清单（单一真相源：新增/删除文件只需改这里）
+      STATIC_FILES: |
+        index.html
+        avatar.jpeg
+        blog-cover.jpg
+        og-image.png
+        e.html
+        favicon.ico
+        favicon.png
+        robots.txt
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: 安装 tccli + coscli
+      - name: 安装 tccli + coscli v1.0.9
         run: |
           set -euo pipefail
           # tccli（腾讯云 CLI，含 EdgeOne / COS 全部 API）
@@ -36,27 +55,28 @@ jobs:
       - name: 校验源文件齐全
         run: |
           missing=0
-          for f in index.html avatar.jpeg blog-cover.jpg og-image.png e.html favicon.ico favicon.png robots.txt; do
+          while IFS= read -r f; do
+            # 跳过空行与注释行
+            [ -z "$f" ] && continue
+            case "$f" in '#'*) continue ;; esac
             if [ ! -f "$f" ]; then
               echo "::error file=$f::源文件缺失"
               missing=1
             else
               echo "✓ $f ($(wc -c < "$f") bytes)"
             fi
-          done
+          done <<< "$STATIC_FILES"
           [ "$missing" -eq 0 ] || (echo "FAIL: 源文件不全"; exit 1)
 
-      - name: coscli 同步 8 个静态文件到 COS
+      - name: coscli 同步静态文件到 COS
         run: |
           set -euo pipefail
-          coscli cp index.html      cos://${COS_BUCKET}/index.html
-          coscli cp avatar.jpeg     cos://${COS_BUCKET}/avatar.jpeg
-          coscli cp blog-cover.jpg  cos://${COS_BUCKET}/blog-cover.jpg
-          coscli cp og-image.png    cos://${COS_BUCKET}/og-image.png
-          coscli cp e.html          cos://${COS_BUCKET}/e.html
-          coscli cp favicon.ico     cos://${COS_BUCKET}/favicon.ico
-          coscli cp favicon.png     cos://${COS_BUCKET}/favicon.png
-          coscli cp robots.txt      cos://${COS_BUCKET}/robots.txt
+          while IFS= read -r f; do
+            [ -z "$f" ] && continue
+            case "$f" in '#'*) continue ;; esac
+            coscli cp "$f" "cos://${COS_BUCKET}/${f}"
+          done <<< "$STATIC_FILES"
+          echo "✅ 全部 $(echo "$STATIC_FILES" | grep -cvE '^\s*(#|$)') 个静态文件同步完毕"
 
       - name: tccli 调 EdgeOne purge_host
         run: |
