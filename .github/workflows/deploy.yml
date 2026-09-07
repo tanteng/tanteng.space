@@ -1,0 +1,75 @@
+name: Deploy tanteng.space → COS + EdgeOne purge
+
+# 仅手动触发，无 push 自动部署（按 9/6 + 9/7 立）
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    env:
+      # Secrets（GitHub repo → Settings → Secrets and variables → Actions）
+      TENCENTCLOUD_SECRET_ID: ${{ secrets.TENCENTCLOUD_SECRET_ID }}
+      TENCENTCLOUD_SECRET_KEY: ${{ secrets.TENCENTCLOUD_SECRET_KEY }}
+      # 资源标识符（不是 secret，硬编码进 workflow）
+      COS_BUCKET: www-1303209934
+      COS_REGION: ap-guangzhou
+      EO_ZONE_ID: zone-3g912l176apo
+      EO_TARGET_HOST: tanteng.space
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: 安装 tccli + coscli
+        run: |
+          set -euo pipefail
+          # tccli（腾讯云 CLI，含 EdgeOne / COS 全部 API）
+          pip install tccli
+          # coscli（COS 专用高速 CLI，官方 GitHub release v1.0.9）
+          wget -q https://github.com/tencentyun/coscli/releases/download/v1.0.9/coscli-v1.0.9-linux-amd64 -O /usr/local/bin/coscli
+          chmod +x /usr/local/bin/coscli
+          coscli --version
+
+      - name: 校验源文件齐全
+        run: |
+          missing=0
+          for f in index.html avatar.jpeg blog-cover.jpg og-image.png e.html favicon.ico favicon.png robots.txt; do
+            if [ ! -f "$f" ]; then
+              echo "::error file=$f::源文件缺失"
+              missing=1
+            else
+              echo "✓ $f ($(wc -c < "$f") bytes)"
+            fi
+          done
+          [ "$missing" -eq 0 ] || (echo "FAIL: 源文件不全"; exit 1)
+
+      - name: coscli 同步 8 个静态文件到 COS
+        run: |
+          set -euo pipefail
+          coscli cp index.html      cos://${COS_BUCKET}/index.html
+          coscli cp avatar.jpeg     cos://${COS_BUCKET}/avatar.jpeg
+          coscli cp blog-cover.jpg  cos://${COS_BUCKET}/blog-cover.jpg
+          coscli cp og-image.png    cos://${COS_BUCKET}/og-image.png
+          coscli cp e.html          cos://${COS_BUCKET}/e.html
+          coscli cp favicon.ico     cos://${COS_BUCKET}/favicon.ico
+          coscli cp favicon.png     cos://${COS_BUCKET}/favicon.png
+          coscli cp robots.txt      cos://${COS_BUCKET}/robots.txt
+
+      - name: tccli 调 EdgeOne purge_host
+        run: |
+          tccli teo CreatePurgeTask \
+            --Type purge_host \
+            --Targets "[\"${EO_TARGET_HOST}\"]" \
+            --ZoneId ${EO_ZONE_ID} \
+            --region ap-guangzhou
+
+      - name: 验证部署生效
+        run: |
+          sleep 3
+          status=$(curl -s -o /dev/null -w "%{http_code}" https://tanteng.space/)
+          etag=$(curl -sI https://tanteng.space/ | grep -i '^etag:' | awk '{print $2}' | tr -d '\r')
+          echo "HTTP $status / ETag $etag"
+          [ "$status" = "200" ] || (echo "FAIL: HTTP $status"; exit 1)
