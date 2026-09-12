@@ -1,8 +1,9 @@
 name: Deploy tanteng.space → COS + EdgeOne purge
 
-# 仅手动触发（按 9/6 + 9/7 立），无 push 自动部署
+# 改回 push 触发（9/12 立，恢复自动部署），仅主分支
 on:
-  workflow_dispatch:
+  push:
+    branches: [main]
 
 # 防止并发部署（同一个站点同一时间只允许一次）
 concurrency:
