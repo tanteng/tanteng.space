@@ -37,6 +37,7 @@ jobs:
         favicon.ico
         favicon.png
         robots.txt
+        sitemap.xml
 
     steps:
       - name: Checkout repository
