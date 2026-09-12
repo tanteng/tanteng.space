@@ -1,5 +1,4 @@
 User-agent: *
 Allow: /
 
-# 站点地图
 Sitemap: https://tanteng.space/sitemap.xml
