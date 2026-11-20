@@ -39,7 +39,7 @@ jobs:
         favicon.png
         robots.txt
         sitemap.xml
-        wj1-decrypt-tool.html
+        whisper.html
 
     steps:
       - name: Checkout repository
