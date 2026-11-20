@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WJ-1 密文工具</title>
+<style>
+  :root{
+    --bg:#f6f7f9; --card:#ffffff; --line:#e3e6eb; --text:#1f2329; --muted:#6b7280;
+    --accent:#2563eb; --accent-weak:#eff4ff; --ok:#0f7b53; --err:#b42318;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;line-height:1.6}
+  .wrap{max-width:1000px;margin:0 auto;padding:32px 20px 60px}
+  header h1{font-size:26px;margin:0 0 6px;letter-spacing:.5px}
+  header p{margin:0;color:var(--muted);font-size:14px}
+  .note{margin:22px 0;background:var(--accent-weak);border:1px solid #d7e3ff;border-radius:10px;padding:14px 16px;font-size:13px;color:#334155}
+  .note b{color:var(--accent)}
+  .keybar{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin-bottom:20px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+  .keybar label{font-weight:600;font-size:14px;white-space:nowrap}
+  .keybar input{flex:1;min-width:220px;padding:10px 12px;border:1px solid var(--line);border-radius:8px;font-size:14px;background:#fff;color:var(--text)}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media(max-width:760px){.grid{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px}
+  .card h2{font-size:17px;margin:0 0 12px;display:flex;align-items:center;gap:8px}
+  .badge{font-size:11px;font-weight:700;color:#fff;background:var(--accent);border-radius:5px;padding:2px 7px}
+  textarea{width:100%;min-height:120px;resize:vertical;padding:12px;border:1px solid var(--line);border-radius:8px;font-size:14px;font-family:inherit;background:#fff;color:var(--text)}
+  textarea:focus,input:focus{outline:2px solid #bfd4ff;border-color:var(--accent)}
+  .row{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+  button{border:1px solid var(--line);background:#fff;color:var(--text);border-radius:8px;padding:9px 14px;font-size:14px;cursor:pointer;font-family:inherit}
+  button:hover{background:#f3f4f6}
+  button.primary{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600}
+  button.primary:hover{background:#1d4ed8}
+  .out{min-height:120px;background:#fafbfc}
+  .msg{margin-top:10px;font-size:13px;min-height:20px}
+  .msg.ok{color:var(--ok)} .msg.err{color:var(--err)}
+  details{margin-top:26px;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px;font-size:13px;color:#334155}
+  summary{cursor:pointer;font-weight:600;color:var(--text)}
+  code{background:#f1f3f5;border-radius:4px;padding:1px 5px;font-size:12px}
+ </style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>WJ-1 密文工具</h1>
+    <p>微信文字聊天用 · 纯本地离线运行 · 不联网、不上传任何内容</p>
+  </header>
+
+  <div class="note">
+    <b>使用约定：</b>① 你和对方必须事先约定<b>同一个口令</b>，口令不要用微信发；② 发出去的密文一律以 <code>WJ1:</code> 开头，整段复制粘贴即可；③ 同一句话每次加密结果都不同，这是正常的（每条消息都有随机值）；④ 口令错或密文被改动，会提示校验失败。
+  </div>
+
+  <div class="keybar">
+    <label for="pass">约定口令</label>
+    <input id="pass" type="password" autocomplete="off" placeholder="输入双方约定好的口令">
+    <button id="toggle" type="button">显示</button>
+  </div>
+
+  <div class="grid">
+    <section class="card">
+      <h2><span class="badge">发</span> 加密</h2>
+      <textarea id="plain" placeholder="在这里输入要发给对方的中文/英文/emoji…"></textarea>
+      <div class="row">
+        <button class="primary" id="doEnc">加密</button>
+        <button id="copyEnc">复制密文</button>
+        <button id="clearEnc">清空</button>
+      </div>
+      <div class="msg" id="msgEnc"></div>
+      <textarea id="cipher" class="out" readonly placeholder="加密结果（WJ1: 开头）"></textarea>
+    </section>
+
+    <section class="card">
+      <h2><span class="badge">收</span> 解密</h2>
+      <textarea id="cipherIn" placeholder="把对方发来的 WJ1: 开头的密文整段粘贴到这里"></textarea>
+      <div class="row">
+        <button class="primary" id="doDec">解密</button>
+        <button id="copyDec">复制明文</button>
+        <button id="clearDec">清空</button>
+      </div>
+      <div class="msg" id="msgDec"></div>
+      <textarea id="plainOut" class="out" readonly placeholder="解密结果"></textarea>
+    </section>
+  </div>
+
+  <details>
+    <summary>算法说明（WJ-1）</summary>
+    <p>1. 口令经 SHA-256 得到 32 字节密钥；双方口令必须一致。</p>
+    <p>2. 每条消息随机生成 8 字节 nonce；用 HMAC-SHA256(密钥, "ENC" + nonce + 计数器) 逐块生成密钥流，与明文的 UTF-8 字节逐位异或。</p>
+    <p>3. 对 "MAC" + nonce + 密文 再算 HMAC-SHA256，取前 16 字节作校验码，附在密文末尾（先加密后认证）。</p>
+    <p>4. 最终格式：<code>WJ1: + Base64URL( "WJ1" + nonce + 密文 + 校验码 )</code>。</p>
+    <p>5. 解密时先验校验码，不一致直接拒绝；一致才用同样密钥流还原明文。</p>
+  </details>
+
+ </div>
+
+<script>
+/* ---------- WJ-1 核心算法 ---------- */
+function rotr(x, n) { return ((x >>> n) | (x << (32 - n))) >>> 0; }
+const SHA256_K = new Uint32Array([
+  0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,
+  0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,
+  0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,
+  0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,
+  0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,
+  0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,
+  0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,
+  0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2
+]);
+function sha256(bytes) {
+  const h = new Uint32Array([0x6a09e667,0xbb67ae85,0x3c6ef372,0xa54ff53a,
+                             0x510e527f,0x9b05688c,0x1f83d9ab,0x5be0cd19]);
+  const bitLen = bytes.length * 8;
+  const withOne = bytes.length + 1;
+  const rem = withOne % 64;
+  const zeroPad = (rem <= 56) ? (56 - rem) : (120 - rem);
+  const total = withOne + zeroPad + 8;
+  const msg = new Uint8Array(total);
+  msg.set(bytes); msg[bytes.length] = 0x80;
+  const view = new DataView(msg.buffer);
+  view.setUint32(total - 8, Math.floor(bitLen / 0x100000000), false);
+  view.setUint32(total - 4, bitLen >>> 0, false);
+  const w = new Uint32Array(64);
+  for (let i = 0; i < msg.length; i += 64) {
+    for (let t = 0; t < 16; t++) w[t] = view.getUint32(i + t * 4, false);
+    for (let t = 16; t < 64; t++) {
+      const s0 = rotr(w[t-15],7) ^ rotr(w[t-15],18) ^ (w[t-15] >>> 3);
+      const s1 = rotr(w[t-2],17) ^ rotr(w[t-2],19) ^ (w[t-2] >>> 10);
+      w[t] = (w[t-16] + s0 + w[t-7] + s1) >>> 0;
+    }
+    let [a,b,c,d,e,f,g,hh] = h;
+    for (let t = 0; t < 64; t++) {
+      const S1 = rotr(e,6) ^ rotr(e,11) ^ rotr(e,25);
+      const ch = (e & f) ^ (~e & g);
+      const t1 = (hh + S1 + ch + SHA256_K[t] + w[t]) >>> 0;
+      const S0 = rotr(a,2) ^ rotr(a,13) ^ rotr(a,22);
+      const maj = (a & b) ^ (a & c) ^ (b & c);
+      const t2 = (S0 + maj) >>> 0;
+      hh=g; g=f; f=e; e=(d+t1)>>>0; d=c; c=b; b=a; a=(t1+t2)>>>0;
+    }
+    h[0]=(h[0]+a)>>>0; h[1]=(h[1]+b)>>>0; h[2]=(h[2]+c)>>>0; h[3]=(h[3]+d)>>>0;
+    h[4]=(h[4]+e)>>>0; h[5]=(h[5]+f)>>>0; h[6]=(h[6]+g)>>>0; h[7]=(h[7]+hh)>>>0;
+  }
+  const out = new Uint8Array(32); const ov = new DataView(out.buffer);
+  for (let i = 0; i < 8; i++) ov.setUint32(i * 4, h[i], false);
+  return out;
+}
+function hmac(key, msg) {
+  const BLOCK = 64;
+  let k = key.length > BLOCK ? sha256(key) : key;
+  const kp = new Uint8Array(BLOCK); kp.set(k);
+  const ipad = new Uint8Array(BLOCK), opad = new Uint8Array(BLOCK);
+  for (let i = 0; i < BLOCK; i++) { ipad[i] = kp[i] ^ 0x36; opad[i] = kp[i] ^ 0x5c; }
+  const inner = new Uint8Array(BLOCK + msg.length);
+  inner.set(ipad); inner.set(msg, BLOCK);
+  const ih = sha256(inner);
+  const outer = new Uint8Array(BLOCK + 32);
+  outer.set(opad); outer.set(ih, BLOCK);
+  return sha256(outer);
+}
+function concat(...arrs) {
+  const n = arrs.reduce((s, a) => s + a.length, 0);
+  const out = new Uint8Array(n); let p = 0;
+  for (const a of arrs) { out.set(a, p); p += a.length; }
+  return out;
+}
+const TE = new TextEncoder(), TD = new TextDecoder('utf-8', { fatal: true });
+const MAGIC = TE.encode('WJ1');
+function deriveKey(pass) { return sha256(TE.encode(pass)); }
+function keystream(key, nonce, length) {
+  const out = new Uint8Array(length); let p = 0, counter = 0;
+  while (p < length) {
+    const ctr = new Uint8Array(4);
+    new DataView(ctr.buffer).setUint32(0, counter, false);
+    const block = hmac(key, concat(TE.encode('ENC'), nonce, ctr));
+    const take = Math.min(32, length - p);
+    out.set(block.subarray(0, take), p); p += take; counter++;
+  }
+  return out;
+}
+function b64urlEncode(bytes) {
+  let s = '';
+  for (let i = 0; i < bytes.length; i++) s += String.fromCharCode(bytes[i]);
+  return btoa(s).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+}
+function b64urlDecode(str) {
+  let s = str.replace(/-/g, '+').replace(/_/g, '/');
+  while (s.length % 4) s += '=';
+  const bin = atob(s); const out = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) out[i] = bin.charCodeAt(i);
+  return out;
+}
+function encryptWJ1(pass, plaintext) {
+  const key = deriveKey(pass);
+  const nonce = crypto.getRandomValues(new Uint8Array(8));
+  const data = TE.encode(plaintext);
+  const ks = keystream(key, nonce, data.length);
+  const cipher = new Uint8Array(data.length);
+  for (let i = 0; i < data.length; i++) cipher[i] = data[i] ^ ks[i];
+  const mac = hmac(key, concat(TE.encode('MAC'), nonce, cipher)).subarray(0, 16);
+  return 'WJ1:' + b64urlEncode(concat(MAGIC, nonce, cipher, mac));
+}
+function decryptWJ1(pass, token) {
+  token = token.trim();
+  if (!token.startsWith('WJ1:')) throw new Error('不是 WJ-1 密文（应以 WJ1: 开头）');
+  const key = deriveKey(pass);
+  const raw = b64urlDecode(token.slice(4));
+  if (raw.length < 27 || String.fromCharCode(...raw.slice(0, 3)) !== 'WJ1') throw new Error('密文格式不完整或头部不匹配');
+  const nonce = raw.slice(3, 11);
+  const mac = raw.slice(raw.length - 16);
+  const cipher = raw.slice(11, raw.length - 16);
+  const expect = hmac(key, concat(TE.encode('MAC'), nonce, cipher)).subarray(0, 16);
+  let ok = mac.length === expect.length;
+  for (let i = 0; ok && i < mac.length; i++) if (mac[i] !== expect[i]) ok = false;
+  if (!ok) throw new Error('校验失败：口令错误，或密文被篡改');
+  const ks = keystream(key, nonce, cipher.length);
+  const data = new Uint8Array(cipher.length);
+  for (let i = 0; i < cipher.length; i++) data[i] = cipher[i] ^ ks[i];
+  return TD.decode(data);
+}
+
+/* ---------- 界面交互 ---------- */
+const $ = id => document.getElementById(id);
+function getPass(){ const p = $('pass').value; if(!p){ alert('请先填写双方约定的口令'); return null; } return p; }
+function setMsg(id, text, kind){ const el=$(id); el.textContent=text; el.className='msg '+(kind||''); }
+$('toggle').onclick = () => { const i=$('pass'); const show=i.type==='password'; i.type=show?'text':'password'; $('toggle').textContent=show?'隐藏':'显示'; };
+$('doEnc').onclick = () => {
+  const p=getPass(); if(!p) return;
+  try { const c=encryptWJ1(p,$('plain').value); $('cipher').value=c; setMsg('msgEnc','加密完成，点「复制密文」发给对方。','ok'); }
+  catch(e){ setMsg('msgEnc','加密失败：'+e.message,'err'); }
+};
+$('doDec').onclick = () => {
+  const p=getPass(); if(!p) return;
+  try { const m=decryptWJ1(p,$('cipherIn').value); $('plainOut').value=m; setMsg('msgDec','解密成功。','ok'); }
+  catch(e){ $('plainOut').value=''; setMsg('msgDec','解密失败：'+e.message,'err'); }
+};
+function copyFrom(src, msgId){
+  const v=$(src).value;
+  if(!v){ setMsg(msgId,'没有可复制的内容','err'); return; }
+  navigator.clipboard.writeText(v).then(()=>setMsg(msgId,'已复制到剪贴板','ok'))
+    .catch(()=>{ $(src).select(); document.execCommand('copy'); setMsg(msgId,'已复制到剪贴板','ok'); });
+}
+$('copyEnc').onclick=()=>copyFrom('cipher','msgEnc');
+$('copyDec').onclick=()=>copyFrom('plainOut','msgDec');
+$('clearEnc').onclick=()=>{ $('plain').value=''; $('cipher').value=''; setMsg('msgEnc',''); };
+$('clearDec').onclick=()=>{ $('cipherIn').value=''; $('plainOut').value=''; setMsg('msgDec',''); };
+</script>
+</body>
+</html>
